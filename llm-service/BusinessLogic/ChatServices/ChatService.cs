@@ -2,7 +2,8 @@ using System;
 
 namespace Backend.BusinessLogic;
 
-public class Class1
+public class ChatService
+
 {
 
 }
