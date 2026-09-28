@@ -1,4 +1,6 @@
 import { Field, Formik, Form } from "formik";
+import "../Login/LoginForm.css";
+import "./CreateUser.css";
 
 export interface CreateUserForm {
   firstname: string;
@@ -31,15 +33,38 @@ function CreateUserForm({ onCreated }: CreateUserFormProps) {
         <Form>
           <div className="formFill">
             <label>First Name</label>
-            <Field id="name" name="name" type="text" />
+            <Field
+              id="name"
+              name="name"
+              placeholder="Your First Name..."
+              type="text"
+            />
             <label>Last Name</label>
-            <Field id="name" name="name" type="text" />
+            <Field
+              id="name"
+              name="name"
+              placeholder="Your Last Name..."
+              type="text"
+            />
             <label>Email</label>
-            <Field id="email" name="email" type="email" />
+            <Field
+              id="email"
+              name="email"
+              placeholder="Your Email..."
+              type="email"
+            />
             <label>Nationality</label>
-            <Field id="nationality" name="nationality" type="text" />
-            <label>Staus</label>
-            <Field id="status" name="status" type="text" />
+            <select id="country" name="country">
+              <option value="Norwegian">Norwegian</option>
+              <option value="Swedish">Swedish</option>
+              <option value="Danish">Danish</option>
+            </select>
+            <label>Reason for usage: </label>
+            <select id="status" name="staus">
+              <option value="Work">Work</option>
+              <option value="Hobby">Hobby</option>
+              <option value="Study">Study</option>
+            </select>
           </div>
           <button id="createButton" type="submit">
             Create

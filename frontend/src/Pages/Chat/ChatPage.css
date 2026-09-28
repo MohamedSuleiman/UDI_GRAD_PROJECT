@@ -1,0 +1,33 @@
+.chats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 12px;
+  max-width: 60%;
+}
+
+.answer {
+  align-self: flex-start;
+  background-color: lightgray;
+}
+
+.me {
+  align-self: flex-end;
+  background-color: lightblue;
+}
+
+.messageInput input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.messageInput .mainButton {
+  width: 80px;
+  margin-top: 0;
+  padding: 10px;
+}

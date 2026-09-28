@@ -1,4 +1,5 @@
 import { Field, Formik, Form } from "formik";
+import "./LoginForm.css";
 
 export interface LoginForm {
   email: string;
@@ -25,9 +26,14 @@ function LoginForm({ onLoginSubmit }: LoginFormProps) {
         <Form>
           <div className="formFill">
             <label>Email</label>
-            <Field id="email" name="email" type="email" />
+            <Field id="email" name="email" placeholder="Your Email..." type="email" />
             <label>Password</label>
-            <Field id="password" name="password" type="any" />
+            <Field
+              id="password"
+              name="password"
+              placeholder="Your Password..."
+              type="any"
+            />
           </div>
           <button id="loginButton" type="submit">
             Login
