@@ -1,3 +1,4 @@
+//bruk dette for dependency injection: IChatClient chatClient = new OllamaApiClient(new Uri("http://localhost:11434/"), "deepseek-r1:latest");
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
