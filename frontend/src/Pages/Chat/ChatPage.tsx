@@ -10,8 +10,8 @@ export function ChatPage() {
       </nav>
       <h2>Chat</h2>
       <div className="chats">
-        <div className="message answer">Hello this is the return chat</div>
         <div className="message me">Hi! this is a chat message from me.</div>
+        <div className="message answer">Hello this is the return chat</div>
         <div className="message me">
           and my chats is seen on the right side!
         </div>

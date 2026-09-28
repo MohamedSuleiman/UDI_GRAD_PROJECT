@@ -34,15 +34,15 @@ function CreateUserForm({ onCreated }: CreateUserFormProps) {
           <div className="formFill">
             <label>First Name</label>
             <Field
-              id="name"
-              name="name"
+              id="firstname"
+              name="firstname"
               placeholder="Your First Name..."
               type="text"
             />
             <label>Last Name</label>
             <Field
-              id="name"
-              name="name"
+              id="lastname"
+              name="lastname"
               placeholder="Your Last Name..."
               type="text"
             />
