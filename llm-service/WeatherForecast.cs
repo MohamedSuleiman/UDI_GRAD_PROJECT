@@ -1,4 +1,4 @@
-namespace Backend;
+namespace LlmService;
 
 public class WeatherForecast
 {
