@@ -25,16 +25,26 @@ public class ChatController : ControllerBase
     [HttpPost()]
     public async Task<ActionResult> sendPrompt(ChatInputDTO chatInput)
     {
-        Console.WriteLine($"User Id: {chatInput.UserID}");
+        if (chatInput.Content == null || chatInput.Content.Length == 0)
+            {
+                return BadRequest("Content cannot be empty.");
+            }
 
-        foreach (string message in chatInput.Content)
-        {
-            Console.WriteLine(message);
+        try {
+            Console.WriteLine($"User Id: {chatInput.UserID}");
+
+            string prompt = string.Join("\n", chatInput.Content);
+
+            var response = await _client.GetUserPromt(chatInput.UserID, prompt);
+
+            return Ok(response);
         }
-
-        var response = await _client.GetUserPromt(chatInput.UserID, chatInput.Content[0]);
-
-        return Ok(response);
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            return StatusCode(500, "A server error occurred while processing the request.");
+        }
+   
     }
 
 }
