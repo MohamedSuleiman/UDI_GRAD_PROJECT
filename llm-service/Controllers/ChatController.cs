@@ -16,6 +16,10 @@ public class ChatController : ControllerBase
     [HttpPost()]
     public async Task<ActionResult> sendPrompt(ChatInputDTO chatInput)
     {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
         if (chatInput.Content == null || chatInput.Content.Length == 0)
             {
                 return BadRequest("Content cannot be empty.");
