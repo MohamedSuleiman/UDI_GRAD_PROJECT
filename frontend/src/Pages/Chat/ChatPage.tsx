@@ -30,14 +30,9 @@ export function ChatPage() {
         <Link to="/">Home</Link>{" "}
       </nav>
       <h2>Chat</h2>
-      {"Her er svare" + response}
-      {/* Displays the chat messages */}
-      <div className="chats">
-        <div className="message me">Hi! this is a chat message from me.</div>
-        <div className="message answer">Hello this is the return chat</div>
-        <div className="message me">
-          and my chats is seen on the right side!
-        </div>
+      <div>
+        <h3>Svaret på promt</h3>
+        <p>{response}</p>
       </div>
 
       {/* Input field for writing and sending a new message */}
