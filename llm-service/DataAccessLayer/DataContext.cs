@@ -1,6 +1,6 @@
 using System;
 
-namespace Backend.DataAccessLayer;
+namespace LlmService.DataAccessLayer;
 
 public class DataContext
 {

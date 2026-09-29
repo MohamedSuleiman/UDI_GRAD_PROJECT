@@ -1,7 +1,7 @@
 using System;
-using Backend.Domain.Enum;
+using LlmService.Domain.Enum;
 
-namespace Backend.Domain.Model;
+namespace LlmService.Domain.Model;
 
 public class User
 {

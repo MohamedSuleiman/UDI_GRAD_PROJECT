@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.AI;
 
 
-namespace Backend.Domain.Model;
+namespace LlmService.Domain.Model;
 
 public class Chat
 {

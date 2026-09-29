@@ -1,6 +1,6 @@
 using System;
 
-namespace Backend.BusinessLogic;
+namespace LlmService.BusinessLogic;
 
 public class ChatService
 

@@ -1,4 +1,4 @@
-namespace Backend.Domain.Enum;
+namespace LlmService.Domain.Enum;
 
 public enum Nationality
 {
