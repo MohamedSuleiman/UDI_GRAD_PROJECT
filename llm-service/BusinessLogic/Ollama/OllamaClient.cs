@@ -1,6 +1,5 @@
-using LlmService;
 using Microsoft.Extensions.AI;
-using OllamaSharp;
+using LlmService;
 
 namespace LlmService;
 
@@ -15,7 +14,7 @@ public class OllamaClient : IClientO
 
     public async Task<string> GetUserPromt(int chatId, string promt)
     {
-            //egt flow, hent chat fra db
+        //egt flow, hent chat fra db
         // -- Chat chat = db.getChat(id)
         // -- List<ChatMessage> messages = chat.context;
         // messages.add(promt)

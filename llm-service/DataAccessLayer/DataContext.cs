@@ -1,5 +1,5 @@
 using System;
-using Backend.Domain.Model;
+using LlmService.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace LlmService.DataAccessLayer;
