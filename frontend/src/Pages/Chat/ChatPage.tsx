@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./ChatPage.css";
 import "../../index.css";
+import { MyForm } from "../Form/MyForm";
 
 /* Displays the chat page with messages and a message input */
 export function ChatPage() {
@@ -22,10 +23,8 @@ export function ChatPage() {
       </div>
 
       {/* Input field for writing and sending a new message */}
-      <div className="messageInput">
-        <input type="text" placeholder="Skriv en melding..." />
-        <button className="mainButton"> Send</button>
-      </div>
+      <MyForm/>
+
     </div>
   );
 }
