@@ -14,11 +14,13 @@ public class OllamaClient : IClientO
 
     public async Task<string> GetUserPromt(int chatId, string promt)
     {
-        //egt flow, hent chat fra db
-        // -- Chat chat = db.getChat(id)
-        // -- List<ChatMessage> messages = chat.context;
-        // messages.add(promt)
-        // pass inn context til GetStreamingResponseAsync()
+        // var chat = await _db.Chats
+        // .Include(c => c.Context)
+        // .FirstOrDefaultAsync(c => c.Id == chatId);
+
+        // if (chat is null)
+        // throw new KeyNotFoundException($"Chat {chatId} was not found.");
+
         List<ChatMessage> messages = new();
         messages.Add(new(ChatRole.User, promt));
 
