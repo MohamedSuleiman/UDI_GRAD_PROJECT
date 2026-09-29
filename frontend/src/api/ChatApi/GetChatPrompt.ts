@@ -2,7 +2,10 @@ import axios from "axios"
 
 export type Props = {
     url: string,
-    dataValues: Record<string, FormDataEntryValue> 
+    dataValues: {
+        UserID: number,
+        Content: string []
+    }
 }
 export async function GetChatPrompt(): Promise<string> {
     const response = await axios.get<string>("http://localhost:5065/chat");

@@ -12,13 +12,16 @@ export function ChatPage() {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        const values = Object.fromEntries(formData.entries());
         const sendR: Props = {
             url: "http://localhost:5065/chat",
-            dataValues: values
+            dataValues: {
+            UserID: Number(formData.get("UserID")),
+            Content: [String(formData.get("Content"))],
+}
         };
         const data = await PostPromt(sendR);
         setResponse(data);
+        console.log(response)
     }
   return (
     <div className="chat">
