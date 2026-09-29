@@ -1,4 +1,6 @@
 using LlmService;
+using LlmService.DataAccessLayer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
 //IChatClient chatClient = new OllamaApiClient(new Uri("http://localhost:11434/"), "deepseek-r1:latest");
@@ -12,6 +14,9 @@ builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IChatClient>(new OllamaApiClient("http://localhost:11434/", "llama3.2"));
 builder.Services.AddSingleton<IClientO, OllamaClient>();
 
+
+builder.Services.AddDbContext<DataAccessContext>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("postgres")));
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
