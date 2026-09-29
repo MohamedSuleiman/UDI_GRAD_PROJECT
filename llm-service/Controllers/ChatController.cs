@@ -12,19 +12,14 @@ public class ChatController : ControllerBase
         _client = client;
     }
     
-    string input = "What is the capital of Norway?";
-
-    [HttpGet()]
-    public async Task<ActionResult> sendPromt(string input)
-    {
-        var response = await _client.GetUserPromt(1, input);
-
-        return Ok(response);
-    }
 
     [HttpPost()]
     public async Task<ActionResult> sendPrompt(ChatInputDTO chatInput)
     {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
         if (chatInput.Content == null || chatInput.Content.Length == 0)
             {
                 return BadRequest("Content cannot be empty.");
