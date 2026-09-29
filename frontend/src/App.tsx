@@ -4,18 +4,26 @@ import { ChatPage } from "./Pages/Chat/ChatPage";
 import LoginForm from "./Pages/Login/LoginForm";
 import CreateUserForm from "./Pages/CreateUser/CreateUser";
 
+// defines the route for all the pages in the application
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Home Page*/}
         <Route path="/" element={<HomePage />} />
+
+        {/* Chat Page*/}
         <Route path="/Chat" element={<ChatPage />} />
+
+        {/* Login Page - logs all the submitted data for now*/}
         <Route
           path="/Login"
           element={
             <LoginForm onLoginSubmit={(values) => console.log(values)} />
           }
         />
+
+        {/* Create User Page - logs all the submitted data for now*/}
         <Route
           path="/CreateUser"
           element={
