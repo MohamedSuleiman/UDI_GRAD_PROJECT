@@ -43,7 +43,7 @@ function LoginForm({ onLoginSubmit }: LoginFormProps) {
               type="password"
             />
           </div>
-          <button id="loginButton" type="submit">
+          <button className="mainButton" type="submit">
             Login
           </button>
         </Form>

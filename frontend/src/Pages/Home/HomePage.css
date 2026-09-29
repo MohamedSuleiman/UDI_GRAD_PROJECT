@@ -31,41 +31,8 @@
   margin: 8px;
 }
 
-.home button {
-  width: 220px;
-
-  background-color: #2563eb;
-  color: white;
-
-  padding: 14px 20px;
-
-  border: none;
-  border-radius: 4px;
-
-  font-size: 15px;
-
-  cursor: pointer;
-
-  /* Ekstra animasjon */
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.home button:hover {
-  background-color: #28145a;
-
-  transform: translateY(-2px);
-
-  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.25);
-}
-
-.home button:active {
-  transform: translateY(0);
-}
-
 #chat {
+  
   background-color: #353e57;
   margin-bottom: 20px;
 }

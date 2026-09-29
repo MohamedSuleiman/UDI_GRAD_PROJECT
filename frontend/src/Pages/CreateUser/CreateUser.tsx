@@ -1,6 +1,5 @@
 import { Field, Formik, Form } from "formik";
 import "../Login/LoginForm.css";
-import "./CreateUser.css";
 
 /* Defining the data required for creating a new user  */
 export interface CreateUserForm {
@@ -78,7 +77,7 @@ function CreateUserForm({ onCreated }: CreateUserFormProps) {
               <option value="Study">Study</option>
             </select>
           </div>
-          <button id="createButton" type="submit">
+          <button className="mainButton" id="createButton" type="submit">
             Create
           </button>
         </Form>
