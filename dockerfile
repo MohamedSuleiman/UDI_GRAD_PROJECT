@@ -2,8 +2,8 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 COPY . .
-RUN dotnet restore llm-service\Backend.csproj
-RUN dotnet publish llm-service\Backend.csproj -c Release --no-restore -o /app/publish
+RUN dotnet restore llm-service/Backend.csproj
+RUN dotnet publish llm-service/Backend.csproj -c Release --no-restore -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app

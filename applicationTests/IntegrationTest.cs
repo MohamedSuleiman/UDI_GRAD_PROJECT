@@ -29,7 +29,7 @@ public class IntegrationTest
     }
 
     [Fact]
-    public async Task Chat_SendEmptyPrompt_ReturnsError()   
+    public async Task Chat_SendEmptyPrompt_ReturnsError()
     {
         // Arrange 
         var mockClient = new Mock<IClientO>();
@@ -43,16 +43,16 @@ public class IntegrationTest
 
         // Act
         var result = await controller.sendPrompt(chatInput);
-        
+
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-        
+
         Assert.Equal("Content cannot be empty.", badRequestResult.Value);
     }
 
 
     [Fact]
-    public async Task Chat_SendNullContent_ReturnsError()   
+    public async Task Chat_SendNullContent_ReturnsError()
     {
         // Arrange 
         var mockClient = new Mock<IClientO>();
@@ -66,15 +66,15 @@ public class IntegrationTest
 
         // Act
         var result = await controller.sendPrompt(chatInput);
-        
+
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-        
+
         Assert.Equal("Content cannot be empty.", badRequestResult.Value);
     }
 
 
-        [Fact]
+    [Fact]
     public async Task Chat_SendMultiplePrompts_ReturnsOk()
     {
         // Arrange 
