@@ -22,7 +22,12 @@ public class ChatController : ControllerBase
         }
         if (chatInput.Content == null || chatInput.Content.Length == 0)
             {
-                return BadRequest("Content cannot be empty.");
+                return BadRequest(new ProblemDetails{
+                    Title = "Invalid Request",
+                    Detail = "Content cannot be empty",
+                    Status = StatusCodes.Status400BadRequest
+
+                });
             }
 
         try {
