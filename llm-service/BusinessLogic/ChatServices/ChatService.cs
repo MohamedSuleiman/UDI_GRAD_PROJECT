@@ -5,7 +5,7 @@ namespace LlmService.BusinessLogic;
 public class ChatService
 
 {
-   
+
     private readonly IClientO _client;
 
     public ChatService(IClientO client)
