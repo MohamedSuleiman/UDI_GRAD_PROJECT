@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using LlmService.BusinessLogic;
+using Backend.Domain.DTO;
 namespace LlmService.Controllers;
 
 [ApiController]
@@ -7,10 +8,11 @@ namespace LlmService.Controllers;
 public class ChatController : ControllerBase
 {
     private IClientO _client;
-    
-    public ChatController(IClientO client)
+    private readonly ChatService _chatService;
+    public ChatController(IClientO client, ChatService chatService)
     {
         _client = client;
+        _chatService = chatService;
     }
     
 
@@ -48,7 +50,33 @@ public class ChatController : ControllerBase
    
     }
 
-    
+    [HttpPost("create")]
+    public async Task<ActionResult> CreateChat(CreateChatDTO createChatDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
 
+        try
+        {
+            var chat = await _chatService.CreateChat(createChatDto);
+            return Ok(chat);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new ProblemDetails
+            {
+                Title = "Invalid Request",
+                Detail = ex.Message,
+                Status = StatusCodes.Status400BadRequest
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            return StatusCode(500, "A server error occurred while processing the request.");
+        }
+    }
 }
 
