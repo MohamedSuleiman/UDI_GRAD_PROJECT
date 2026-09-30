@@ -14,9 +14,9 @@ public class ChatController : ControllerBase
         _client = client;
         _chatService = chatService;
     }
-    
 
-    [HttpPost()]
+
+    [HttpPost]
     public async Task<ActionResult> sendPrompt(ChatInputDTO chatInput)
     {
         if (!ModelState.IsValid)
@@ -24,16 +24,18 @@ public class ChatController : ControllerBase
             return ValidationProblem(ModelState);
         }
         if (chatInput.Content == null || chatInput.Content.Length == 0)
+        {
+            return BadRequest(new ProblemDetails
             {
-                return BadRequest(new ProblemDetails{
-                    Title = "Invalid Request",
-                    Detail = "Content cannot be empty",
-                    Status = StatusCodes.Status400BadRequest
+                Title = "Invalid Request",
+                Detail = "Content cannot be empty",
+                Status = StatusCodes.Status400BadRequest
 
-                });
-            }
+            });
+        }
 
-        try {
+        try
+        {
             Console.WriteLine($"User Id: {chatInput.UserID}");
 
             string prompt = string.Join("\n", chatInput.Content);
@@ -47,10 +49,10 @@ public class ChatController : ControllerBase
             Console.WriteLine($"Error: {ex.Message}");
             return StatusCode(500, "A server error occurred while processing the request.");
         }
-   
+
     }
 
-    [HttpPost("create")]
+    [HttpPost]
     public async Task<ActionResult> CreateChat(CreateChatDTO createChatDto)
     {
         if (!ModelState.IsValid)
