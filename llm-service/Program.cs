@@ -1,6 +1,7 @@
 using Backend.BusinessLogic.UserService;
 using Backend.DataAccessLayer.repositories;
 using LlmService;
+using LlmService.BusinessLogic;
 using LlmService.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.AI;
@@ -12,12 +13,15 @@ var ollamaUrl = builder.Configuration["Ollama:BaseUrl"]
 
 // Add services here
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ChatService>();
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
 
 //Add Repositoris here
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IChatMessageEnityRepository, ChatMessageEnityRepository>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IChatClient>(new OllamaApiClient(new Uri(ollamaUrl), "llama3.2"));
 builder.Services.AddSingleton<IClientO, OllamaClient>();
 
