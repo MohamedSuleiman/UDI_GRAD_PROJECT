@@ -50,5 +50,4 @@ public class ChatRepository : IChatRepository
         await _db.SaveChangesAsync();
     }
 
-
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using LlmService.BusinessLogic;
+using Backend.Domain.DTO;
 using Backend.BusinessLogic.ChatMessageEntityService;
 using Backend.DataAccessLayer.repositories;
 namespace LlmService.Controllers;
@@ -10,46 +11,77 @@ public class ChatController : ControllerBase
 {
     private ChatMessageEntityService _chatMessageEnityService;
     private IClientO _client;
-    public ChatController(IClientO client, ChatMessageEntityService chatMessageEnityService)
+    private readonly ChatService _chatService;
+    public ChatController(IClientO client, ChatService chatService, ChatMessageEntityService chatMessageEnityService)
     {
         _client = client;
-        _chatMessageEnityService = chatMessageEnityService;
+        _chatService = chatService;
     }
-    
 
-    [HttpPost()]
-    public async Task<ActionResult> sendPrompt(ChatInputDTO chatInput)
+
+    // [HttpPost]
+    // public async Task<ActionResult> sendPrompt(ChatInputDTO chatInput)
+    // {
+    //     if (!ModelState.IsValid)
+    //     {
+    //         return ValidationProblem(ModelState);
+    //     }
+    //     if (chatInput.Content == null || chatInput.Content.Length == 0)
+    //     {
+    //         return BadRequest(new ProblemDetails
+    //         {
+    //             Title = "Invalid Request",
+    //             Detail = "Content cannot be empty",
+    //             Status = StatusCodes.Status400BadRequest
+
+    //         });
+    //     }
+
+    //     try
+    //     {
+    //         Console.WriteLine($"User Id: {chatInput.UserID}");
+
+    //         string prompt = string.Join("\n", chatInput.Content);
+
+    //         var response = await _client.GetUserPromt(chatInput.UserID, prompt);
+
+    //         return Ok(response);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Console.WriteLine($"Error: {ex.Message}");
+    //         return StatusCode(500, "A server error occurred while processing the request.");
+    //     }
+
+    // }
+
+    [HttpPost]
+    public async Task<ActionResult> CreateChat(CreateChatDTO createChatDto)
     {
         if (!ModelState.IsValid)
         {
             return ValidationProblem(ModelState);
         }
-        if (chatInput.Content == null || chatInput.Content.Length == 0)
+
+        try
+        {
+            var chat = await _chatService.CreateChat(createChatDto);
+            return Ok(chat);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new ProblemDetails
             {
-                return BadRequest(new ProblemDetails{
-                    Title = "Invalid Request",
-                    Detail = "Content cannot be empty",
-                    Status = StatusCodes.Status400BadRequest
-
-                });
-            }
-
-        try {
-            Console.WriteLine($"User Id: {chatInput.UserID}");
-
-            string prompt = string.Join("\n", chatInput.Content);
-
-            var response = await _chatMessageEnityService.CreateChat(chatInput.UserID, prompt);
-
-            return Ok(response);
+                Title = "Invalid Request",
+                Detail = ex.Message,
+                Status = StatusCodes.Status400BadRequest
+            });
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error: {ex.Message}");
             return StatusCode(500, "A server error occurred while processing the request.");
         }
-   
     }
-
 }
 

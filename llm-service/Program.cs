@@ -13,7 +13,7 @@ var ollamaUrl = builder.Configuration["Ollama:BaseUrl"]
     ?? throw new InvalidOperationException("Ollama:BaseUrl is missing.");
 
 // Add services here
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ChatService>();
 builder.Services.AddControllers();
 
