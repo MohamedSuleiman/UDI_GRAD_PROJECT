@@ -1,5 +1,6 @@
 using Backend.BusinessLogic.ChatMessageEntityService;
 using Backend.DataAccessLayer.repositories;
+using Backend.Domain.DTO;
 using LlmService;
 using LlmService.BusinessLogic;
 using LlmService.Controllers;
