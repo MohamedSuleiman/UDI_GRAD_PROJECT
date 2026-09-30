@@ -1,8 +1,9 @@
-﻿using Backend.DataAccessLayer.repositories;
-using Backend.Domain.DTO;
+using Backend.BusinessLogic.ChatMessageEntityService;
+using Backend.DataAccessLayer.repositories;
 using LlmService;
 using LlmService.BusinessLogic;
 using LlmService.Controllers;
+using LlmService.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -10,14 +11,27 @@ namespace applicationTests;
 
 public class IntegrationTest
 {
-    /*
+    private static ChatController CreateController()
+    {
+        var mockClient = new Mock<IClientO>();
+        mockClient
+            .Setup(client => client.GetUserPromt(It.IsAny<int>(), It.IsAny<string>()))
+            .ReturnsAsync("Mock response");
+
+        var mockRepository = new Mock<IChatMessageEnityRepository>();
+        mockRepository
+            .Setup(repository => repository.CreateChat(It.IsAny<ChatMessageEntity>()))
+            .ReturnsAsync((ChatMessageEntity message) => message);
+
+        var service = new ChatMessageEntityService(mockRepository.Object, mockClient.Object);
+        return new ChatController(mockClient.Object, service);
+    }
+
     [Fact]
     public async Task Chat_SendPrompt_ReturnsOk()
     {
         // Arrange 
-        var mockClient = new Mock<IClientO>();
-
-        var controller = new ChatController(mockClient.Object);
+        var controller = CreateController();
 
         var chatInput = new ChatInputDTO
         {
@@ -36,8 +50,7 @@ public class IntegrationTest
     public async Task Chat_SendEmptyPrompt_ReturnsError()
     {
         // Arrange 
-        var mockClient = new Mock<IClientO>();
-        var controller = new ChatController(mockClient.Object);
+        var controller = CreateController();
 
         var chatInput = new ChatInputDTO
         {
@@ -51,7 +64,8 @@ public class IntegrationTest
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
 
-        Assert.Equal("Content cannot be empty.", badRequestResult.Value);
+        var problem = Assert.IsType<ProblemDetails>(badRequestResult.Value);
+        Assert.Equal("Content cannot be empty", problem.Detail);
     }
 
 
@@ -59,13 +73,12 @@ public class IntegrationTest
     public async Task Chat_SendNullContent_ReturnsError()
     {
         // Arrange 
-        var mockClient = new Mock<IClientO>();
-        var controller = new ChatController(mockClient.Object);
+        var controller = CreateController();
 
         var chatInput = new ChatInputDTO
         {
             UserID = 1,
-            Content = null
+            Content = null!
         };
 
         // Act
@@ -74,7 +87,8 @@ public class IntegrationTest
         // Assert
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
 
-        Assert.Equal("Content cannot be empty.", badRequestResult.Value);
+        var problem = Assert.IsType<ProblemDetails>(badRequestResult.Value);
+        Assert.Equal("Content cannot be empty", problem.Detail);
     }
 
 
@@ -82,9 +96,7 @@ public class IntegrationTest
     public async Task Chat_SendMultiplePrompts_ReturnsOk()
     {
         // Arrange 
-        var mockClient = new Mock<IClientO>();
-
-        var controller = new ChatController(mockClient.Object);
+        var controller = CreateController();
 
         var chatInput = new ChatInputDTO
         {

@@ -1,3 +1,4 @@
+using Backend.BusinessLogic.ChatMessageEntityService;
 using Backend.BusinessLogic.UserService;
 using Backend.DataAccessLayer.repositories;
 using LlmService;
@@ -22,6 +23,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<IChatMessageEnityRepository, ChatMessageEnityRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IChatMessageEnityRepository, ChatMessageEnityRepository>();
+builder.Services.AddScoped<ChatMessageEntityService>();
 builder.Services.AddSingleton<IChatClient>(new OllamaApiClient(new Uri(ollamaUrl), "llama3.2"));
 builder.Services.AddSingleton<IClientO, OllamaClient>();
 
