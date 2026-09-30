@@ -1,4 +1,5 @@
 using System;
+using Backend.Domain.DTO;
 using LlmService.DataAccessLayer;
 using LlmService.Domain.Model;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +24,9 @@ public class ChatMessageEnityRepository : IChatMessageEnityRepository
         return chatMessage;
     }
 
-
-
-
-
+    public Task<ChatMessageEntityResponseDTO> CreateChat(int ChatID, string Content)
+    {
+        throw new NotImplementedException();
+    }
 }
     

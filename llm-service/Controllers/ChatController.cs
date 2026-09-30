@@ -1,15 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using LlmService.BusinessLogic;
+using Backend.BusinessLogic.ChatMessageEntityService;
+using Backend.DataAccessLayer.repositories;
 namespace LlmService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 public class ChatController : ControllerBase
 {
+    private ChatMessageEntityService _chatMessageEnityService;
     private IClientO _client;
-    public ChatController(IClientO client)
+    public ChatController(IClientO client, ChatMessageEntityService chatMessageEnityService)
     {
         _client = client;
+        _chatMessageEnityService = chatMessageEnityService;
     }
     
 
@@ -35,7 +39,7 @@ public class ChatController : ControllerBase
 
             string prompt = string.Join("\n", chatInput.Content);
 
-            var response = await _client.GetUserPromt(chatInput.UserID, prompt);
+            var response = await _chatMessageEnityService.CreateChat(chatInput.UserID, prompt);
 
             return Ok(response);
         }

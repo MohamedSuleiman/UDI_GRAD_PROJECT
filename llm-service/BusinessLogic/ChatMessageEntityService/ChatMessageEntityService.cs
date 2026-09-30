@@ -16,7 +16,7 @@ public class ChatMessageEntityService
         _chatMessageEnityRepository = chatMessageEnityRepository;
         _client = client;
     }
-    public async Task CreateChat(int ChatID, string Content) 
+    public async Task<ChatMessageEntityResponseDTO> CreateChat(int ChatID, string Content) 
     {
 
        if (string.IsNullOrWhiteSpace(Content))
@@ -28,12 +28,14 @@ public class ChatMessageEntityService
         chatMessageEntity.ChatId = ChatID;
         chatMessageEntity.Content = Content;
         chatMessageEntity.Role = "User";
-        ChatMessageEntity response = await _chatMessageEnityRepository.CreateChat(chatMessageEntity);
-        await _client.GetUserPromt(ChatID, Content);
-       // return new ChatMessageEntityResponseDTO
-       // {
-            
-       // };
+        await _chatMessageEnityRepository.CreateChat(chatMessageEntity);
+        String response = await _client.GetUserPromt(ChatID, Content);
+        return new ChatMessageEntityResponseDTO
+        {
+            Id = chatMessageEntity.Id,
+            response = response,
+
+       };
 
     }
 
