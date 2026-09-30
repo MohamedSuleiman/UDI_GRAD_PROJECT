@@ -11,7 +11,7 @@ namespace Backend.BusinessLogic.UserService;
 //--
 //All Methos in this class is related to User
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
 
@@ -20,6 +20,11 @@ public class UserService
         _userRepository = userRepository;
     }
 
+    public async Task<User> GetUserByIdAsync(int id)
+    {
+        User user = await _userRepository.GetUserByIdAsync(id);
+        return user;
+    }
 
     public async Task<User> CreateUserAsync(CreateUserDto dto)
     {

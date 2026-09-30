@@ -14,4 +14,5 @@ public class User
     public UserUsage UserUsage { get; set; }
 
     public List<Chat> Chats { get; set; } = new();
+
 }

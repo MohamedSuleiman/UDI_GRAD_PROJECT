@@ -1,0 +1,13 @@
+using System;
+using Backend.Domain.DTO;
+using LlmService.Domain.Model;
+
+namespace Backend.BusinessLogic.UserService;
+
+public interface IUserService
+{
+    Task<User> CreateUserAsync(CreateUserDto dto);
+    Task<User?> UpdateUserAsync(int id, UpdateUserDto dto);
+
+    Task<User> GetUserByIdAsync(int id);
+}
