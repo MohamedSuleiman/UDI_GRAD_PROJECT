@@ -1,5 +1,7 @@
 name: Build and publish images
 
+# Add Deply method for frontend and backend 
+
 on:
   push:
     branches: [main]

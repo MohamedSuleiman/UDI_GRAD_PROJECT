@@ -24,8 +24,15 @@ public class IntegrationTest
             .Setup(repository => repository.CreateChat(It.IsAny<ChatMessageEntity>()))
             .ReturnsAsync((ChatMessageEntity message) => message);
 
+        // var mockRepository2 = new Mock<IChatRepository>();
+        // mockRepository
+        //     .Setup(repository => repository.CreateChat(It.IsAny<ChatMessageEntity>()))
+        //     .ReturnsAsync((ChatMessageEntity message) => message);
+
+
         var service = new ChatMessageEntityService(mockRepository.Object, mockClient.Object);
-        return new ChatController(mockClient.Object, service);
+        var chatService = new ChatService(mockClient.Object, mockRepository2.Object);
+        return new ChatController(mockClient.Object, service, chatService);
     }
 
     [Fact]
@@ -36,7 +43,7 @@ public class IntegrationTest
 
         var chatInput = new ChatInputDTO
         {
-            UserID = 1,
+            ChatId = 1,
             Content = ["Hello, how are you?"]
         };
 
@@ -55,7 +62,7 @@ public class IntegrationTest
 
         var chatInput = new ChatInputDTO
         {
-            UserID = 1,
+            ChatId = 1,
             Content = []
         };
 
@@ -78,7 +85,7 @@ public class IntegrationTest
 
         var chatInput = new ChatInputDTO
         {
-            UserID = 1,
+            ChatId = 1,
             Content = null!
         };
 
@@ -101,7 +108,7 @@ public class IntegrationTest
 
         var chatInput = new ChatInputDTO
         {
-            UserID = 1,
+            ChatId = 1,
             Content = ["Hello, how are you?", "I'm doing well, thank you!"]
         };
 
@@ -111,7 +118,7 @@ public class IntegrationTest
         // Assert
         Assert.IsType<OkObjectResult>(result);
     }
-    
+
     [Fact]
     public async Task CreateChat_ValidInput_ReturnsCreatedChat()
     {
