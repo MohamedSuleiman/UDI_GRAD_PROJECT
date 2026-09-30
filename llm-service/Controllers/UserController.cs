@@ -1,5 +1,8 @@
 using Backend.BusinessLogic.UserService;
+using Backend.Domain.DTO;
+using LlmService.Domain.Enum;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -40,7 +43,13 @@ namespace Backend.Controllers
             return Ok(user);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(CreateUserDto createUserDto)
+        {
+            var user = await _userService.CreateUserAsync(createUserDto);
 
+            return Ok(user);
+        }
 
     }
 }
