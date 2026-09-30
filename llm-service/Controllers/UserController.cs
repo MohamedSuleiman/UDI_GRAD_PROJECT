@@ -17,6 +17,15 @@ namespace Backend.Controllers
             _userService = userService;
         }
 
+        [HttpGet]
+
+        public IActionResult RootMethod()
+        {
+            Console.WriteLine("test");
+
+            return Ok("test");
+        }
+
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetUserById(int id)
