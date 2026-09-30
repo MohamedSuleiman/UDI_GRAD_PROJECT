@@ -30,15 +30,18 @@ public class ChatService
 
         return response;
     }
+    //-------------------------------------------------------------------------------------
+    //-----------------------ChatService Starts here --------------------------------------
+    //-------------------------------------------------------------------------------------
 
     public async Task<Chat> CreateChat(CreateChatDTO createChatDto)
     {
-        if(string.IsNullOrWhiteSpace(createChatDto.Name))
+        if (string.IsNullOrWhiteSpace(createChatDto.Name))
         {
             throw new ArgumentException("Chat name cannot be empty.", nameof(createChatDto.Name));
         }
 
-        if(createChatDto.UserId <= 0)
+        if (createChatDto.UserId <= 0)
         {
             throw new ArgumentException("User ID must be a positive integer.", nameof(createChatDto.UserId));
         }
@@ -49,9 +52,16 @@ public class ChatService
             UserId = createChatDto.UserId,
             CreatedAt = DateTime.UtcNow,
         };
-        
+
         await _chatRepository.CreateChatAsync(chat);
         return chat;
     }
+
+
+
+
+    //-------------------------------------------------------------------------------------
+    //-----------------------ChatMessageEnityService Starts here --------------------------------------
+    //-------------------------------------------------------------------------------------
 
 }
