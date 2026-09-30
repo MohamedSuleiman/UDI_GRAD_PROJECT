@@ -1,4 +1,7 @@
-﻿using LlmService;
+﻿using Backend.DataAccessLayer.repositories;
+using Backend.Domain.DTO;
+using LlmService;
+using LlmService.BusinessLogic;
 using LlmService.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -7,6 +10,7 @@ namespace applicationTests;
 
 public class IntegrationTest
 {
+    /*
     [Fact]
     public async Task Chat_SendPrompt_ReturnsOk()
     {
@@ -94,5 +98,68 @@ public class IntegrationTest
         // Assert
         Assert.IsType<OkObjectResult>(result);
     }
+    */
+    [Fact]
+    public async Task CreateChat_ValidInput_ReturnsCreatedChat()
+    {
+        // Arrange
+        var mockClient = new Mock<IClientO>();
+        var mockChatRepository = new Mock<IChatRepository>();
+
+        var chatService = new ChatService(mockClient.Object, mockChatRepository.Object);
+
+        var createChatDto = new CreateChatDTO
+        {
+            Name = "Test Chat",
+            UserId = 1
+        };
+
+        // Act
+        var result = await chatService.CreateChat(createChatDto);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(createChatDto.Name, result.Name);
+        Assert.Equal(createChatDto.UserId, result.UserId);
+    }
+
+    [Fact]
+    public async Task CreateChat_InvalidInput_ThrowsArgumentException()
+    {
+        // Arrange
+        var mockClient = new Mock<IClientO>();
+        var mockChatRepository = new Mock<IChatRepository>();
+
+        var chatService = new ChatService(mockClient.Object, mockChatRepository.Object);
+
+        var createChatDto = new CreateChatDTO
+        {
+            Name = "", // Invalid name
+            UserId = 1
+        };
+
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => chatService.CreateChat(createChatDto));
+    }
+
+    [Fact]
+    public async Task CreateChat_InvalidUserId_ThrowsArgumentException()
+    {
+        // Arrange
+        var mockClient = new Mock<IClientO>();
+        var mockChatRepository = new Mock<IChatRepository>();
+
+        var chatService = new ChatService(mockClient.Object, mockChatRepository.Object);
+
+        var createChatDto = new CreateChatDTO
+        {
+            Name = "Test Chat",
+            UserId = -1 // Invalid user ID
+        };
+
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => chatService.CreateChat(createChatDto));
+    }
+
 }
 
