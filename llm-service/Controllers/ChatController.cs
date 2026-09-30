@@ -7,6 +7,7 @@ namespace LlmService.Controllers;
 public class ChatController : ControllerBase
 {
     private IClientO _client;
+    
     public ChatController(IClientO client)
     {
         _client = client;
@@ -46,6 +47,8 @@ public class ChatController : ControllerBase
         }
    
     }
+
+    
 
 }
 
