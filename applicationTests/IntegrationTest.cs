@@ -111,7 +111,7 @@ public class IntegrationTest
         // Assert
         Assert.IsType<OkObjectResult>(result);
     }
-    */
+    
     [Fact]
     public async Task CreateChat_ValidInput_ReturnsCreatedChat()
     {
