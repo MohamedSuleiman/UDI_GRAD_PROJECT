@@ -16,41 +16,41 @@ public class ChatController : ControllerBase
     }
 
 
-    [HttpPost]
-    public async Task<ActionResult> sendPrompt(ChatInputDTO chatInput)
-    {
-        if (!ModelState.IsValid)
-        {
-            return ValidationProblem(ModelState);
-        }
-        if (chatInput.Content == null || chatInput.Content.Length == 0)
-        {
-            return BadRequest(new ProblemDetails
-            {
-                Title = "Invalid Request",
-                Detail = "Content cannot be empty",
-                Status = StatusCodes.Status400BadRequest
+    // [HttpPost]
+    // public async Task<ActionResult> sendPrompt(ChatInputDTO chatInput)
+    // {
+    //     if (!ModelState.IsValid)
+    //     {
+    //         return ValidationProblem(ModelState);
+    //     }
+    //     if (chatInput.Content == null || chatInput.Content.Length == 0)
+    //     {
+    //         return BadRequest(new ProblemDetails
+    //         {
+    //             Title = "Invalid Request",
+    //             Detail = "Content cannot be empty",
+    //             Status = StatusCodes.Status400BadRequest
 
-            });
-        }
+    //         });
+    //     }
 
-        try
-        {
-            Console.WriteLine($"User Id: {chatInput.UserID}");
+    //     try
+    //     {
+    //         Console.WriteLine($"User Id: {chatInput.UserID}");
 
-            string prompt = string.Join("\n", chatInput.Content);
+    //         string prompt = string.Join("\n", chatInput.Content);
 
-            var response = await _client.GetUserPromt(chatInput.UserID, prompt);
+    //         var response = await _client.GetUserPromt(chatInput.UserID, prompt);
 
-            return Ok(response);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-            return StatusCode(500, "A server error occurred while processing the request.");
-        }
+    //         return Ok(response);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Console.WriteLine($"Error: {ex.Message}");
+    //         return StatusCode(500, "A server error occurred while processing the request.");
+    //     }
 
-    }
+    // }
 
     [HttpPost]
     public async Task<ActionResult> CreateChat(CreateChatDTO createChatDto)
