@@ -71,6 +71,19 @@ public class UserService : IUserService
     }
 
 
-    // public async Task DeleteUser()
+    public async Task<User?> DeleteUserAsync(int id)
+    {
+        User user = await _userRepository.GetUserByIdAsync(id);
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        await _userRepository.DeleteUserAsync(user);
+
+        return user;
+
+    }
 
 }
