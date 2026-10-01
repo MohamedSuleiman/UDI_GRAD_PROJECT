@@ -1,7 +1,9 @@
 using System;
+using System.Security.Cryptography;
 using Backend.DataAccessLayer.repositories;
 using Backend.Domain.DTO;
 using LlmService.Domain.Model;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Backend.BusinessLogic.UserService;
@@ -32,9 +34,10 @@ public class UserService : IUserService
         {
             FirstName = dto.FirstName,
             LastName = dto.LastName,
+            Email = dto.Email,
+            Password = dto.Password,
             Nationality = dto.Nationality,
             UserUsage = dto.UserUsage
-
 
         };
         await _userRepository.CreateUserAsync(user);
@@ -56,6 +59,14 @@ public class UserService : IUserService
         if (dto.LastName != null)
         {
             user.LastName = dto.LastName;
+        }
+        if (dto.Email != null)
+        {
+            user.Email = dto.Email;
+        }
+        if (dto.Password != null)
+        {
+            user.Password = dto.Password;
         }
         if (dto.Nationality != null)
         {
@@ -86,4 +97,35 @@ public class UserService : IUserService
 
     }
 
+/*
+// Missing storing of hashing and salt to finish the implementation of this method.
+    public async Task<User?> HashPasswordAsync(int id, string password)
+    {
+        User user = await _userRepository.GetUserByIdAsync(id);
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        // Generate a 128-bit salt using a sequence of
+        // cryptographically strong random bytes.
+        byte[] salt = RandomNumberGenerator.GetBytes(128/8); // Generate a random salt
+
+        // deriving a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
+        string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: password,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 100000,
+            numBytesRequested: 256 / 8));   
+
+        user.Password = hashedPassword;
+
+        await _userRepository.UpdateUserAsync(user);
+
+        return user;
+    }
+
+*/
 }
