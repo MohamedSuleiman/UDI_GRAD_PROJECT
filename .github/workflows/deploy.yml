@@ -1,7 +1,5 @@
 name: Build and publish images
 
-# Add Deply method for frontend and backend 
-
 on:
   push:
     branches: [main]
@@ -11,6 +9,28 @@ permissions:
   contents: read
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: read
+
+    outputs:
+      ollama: ${{ steps.filter.outputs.ollama }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for Ollama changes
+        uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          base: main
+          filters: |
+            ollama:
+              - 'Ollama/**'
+
   frontend:
     runs-on: ubuntu-latest
 
@@ -57,8 +77,9 @@ jobs:
           push: ${{ github.event_name == 'push' }}
           tags: brights2026.azurecr.io/kad/lmk-chat:${{ github.sha }}
 
-
   ollama:
+    needs: changes
+    if: needs.changes.outputs.ollama == 'true'
     runs-on: ubuntu-latest
 
     steps:
