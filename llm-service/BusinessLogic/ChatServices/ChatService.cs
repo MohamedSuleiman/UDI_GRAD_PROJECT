@@ -54,5 +54,16 @@ public class ChatService
         await _chatRepository.CreateChatAsync(chat);
         return chat;
     }
+    public async Task<Chat?> DeleteChat(int chatId)
+    {
+        var chat = await _chatRepository.GetChatByIdAsync(chatId);
+        if (chat == null)
+        {
+            return null;
+        }
+
+        await _chatRepository.DeleteChatAsync(chat);
+        return chat;
+    }
 
 }
