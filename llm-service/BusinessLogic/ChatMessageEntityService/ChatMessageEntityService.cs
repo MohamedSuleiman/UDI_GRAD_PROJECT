@@ -17,7 +17,7 @@ public class ChatMessageEntityService
         _chatMessageEnityRepository = chatMessageEnityRepository;
         _client = client;
     }
-    public async Task<ChatMessageEntityResponseDTO> CreateChat(int ChatID, string Content)
+    public async Task<ChatMessageEntityResponseDTO> CreateChatMessageEntity(int ChatID, string Content)
     {
 
         if (string.IsNullOrWhiteSpace(Content))
@@ -26,17 +26,22 @@ public class ChatMessageEntityService
         }
 
         ChatMessageEntity chatMessageEntity = new();
-        chatMessageEntity.ChatId = ChatID;
+        chatMessageEntity.ChatID = ChatID;
         chatMessageEntity.Content = Content;
         chatMessageEntity.Role = "User";
+        
         await _chatMessageEnityRepository.CreateChat(chatMessageEntity);
         String response = await _client.GetUserPromt(ChatID, Content);
+        // oppdater den i databasen ()
+        await _chatMessageEnityRepository.saveMessageEntityToDB(chatMessageEntity, response);
+
+
         return new ChatMessageEntityResponseDTO
         {
             Id = chatMessageEntity.Id,
             ChatId = ChatID,
-            promt = Content,
-            response = response,
+            Content = Content,
+            Response = response,
 
         };
 

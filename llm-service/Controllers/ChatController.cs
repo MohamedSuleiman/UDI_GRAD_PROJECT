@@ -41,11 +41,11 @@ public class ChatController : ControllerBase
 
         try
         {
-            Console.WriteLine($"User Id: {chatInput.ChatId}");
+            Console.WriteLine($"User Id: {chatInput.ChatID}");
 
             string prompt = string.Join("\n", chatInput.Content);
 
-            var response = await _chatMessageEnityService.CreateChat(chatInput.ChatId, prompt);
+            var response = await _chatMessageEnityService.CreateChatMessageEntity(chatInput.ChatID, prompt);
 
             return Ok(response);
         }

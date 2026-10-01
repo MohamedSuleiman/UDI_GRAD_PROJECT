@@ -7,5 +7,6 @@ namespace Backend.DataAccessLayer.repositories;
 public interface IChatMessageEnityRepository
 {
     public Task<ChatMessageEntity> CreateChat(ChatMessageEntity chatMessage);
+    public Task saveMessageEntityToDB(ChatMessageEntity chatMessageEntity, string response);
     public  Task<ChatMessageEntityResponseDTO> CreateChat(int ChatID, string Content);
 }

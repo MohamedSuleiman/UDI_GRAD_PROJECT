@@ -24,6 +24,13 @@ public class ChatMessageEnityRepository : IChatMessageEnityRepository
         return chatMessage;
     }
 
+    public async Task saveMessageEntityToDB(ChatMessageEntity chatMessageEntity, string response) 
+    {
+         chatMessageEntity.Response = response;
+        _db.Update(chatMessageEntity);
+        await _db.SaveChangesAsync();
+    }
+
     public Task<ChatMessageEntityResponseDTO> CreateChat(int ChatID, string Content)
     {
         throw new NotImplementedException();

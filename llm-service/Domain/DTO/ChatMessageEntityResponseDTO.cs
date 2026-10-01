@@ -8,8 +8,8 @@ public class ChatMessageEntityResponseDTO
     public int Id  {get; set;}
 
     public int ChatId {get; set;}
-    public string promt {get; set;} = string.Empty;
-    public string response {get; set;} = string.Empty;
+    public string Content {get; set;} = string.Empty;
+    public string Response {get; set;} = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
  
 }
