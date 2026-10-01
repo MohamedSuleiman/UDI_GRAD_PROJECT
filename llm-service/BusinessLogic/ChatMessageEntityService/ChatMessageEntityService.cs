@@ -26,7 +26,7 @@ public class ChatMessageEntityService
         }
 
         ChatMessageEntity chatMessageEntity = new();
-        chatMessageEntity.ChatId = ChatID;
+        chatMessageEntity.ChatID = ChatID;
         chatMessageEntity.Content = Content;
         chatMessageEntity.Role = "User";
         await _chatMessageEnityRepository.CreateChat(chatMessageEntity);
