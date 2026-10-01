@@ -4,7 +4,7 @@ namespace LlmService.Domain.Model;
 public class ChatMessageEntity
 {
     public int Id { get; set; }
-    public int ChatId { get; set; }
+    public int ChatID { get; set; }
     public Chat Chat { get; set; } = null!;
 
     public string Role { get; set; } = "";

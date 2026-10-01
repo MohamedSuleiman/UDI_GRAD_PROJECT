@@ -3,7 +3,7 @@ import axios from "axios"
 export type Props = {
     url: string,
     dataValues: {
-        UserID: number,
+        ChatID: number,
         Content: string []
     }
 }

@@ -55,7 +55,7 @@ public class ChatControllerWithoutDatabaseTests
 
         var result = await controller.sendPrompt(new ChatInputDTO
         {
-            UserID = 1,
+            ChatID = 1,
             Content = []
         });
 

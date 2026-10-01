@@ -15,7 +15,7 @@ export function ChatPage() {
     const sendR: Props = {
       url: "http://localhost:5065/chat",
       dataValues: {
-        UserID: Number(formData.get("UserID")),
+        ChatID: Number(formData.get("ChatID")),
         Content: [String(formData.get("Content"))],
       },
     };
