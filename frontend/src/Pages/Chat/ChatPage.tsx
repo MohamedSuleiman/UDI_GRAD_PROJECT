@@ -14,7 +14,7 @@ export function ChatPage() {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const localUrl = "http://localhost:5065";
+    // const localUrl = "http://localhost:5065";
     const sendR: Props = {
       url: `${apiUrl}/chat`,
       dataValues: {
