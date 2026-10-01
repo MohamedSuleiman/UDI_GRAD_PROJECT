@@ -7,7 +7,7 @@ namespace Backend.DataAccessLayer.repositories;
 public interface IUserRepository
 {
 
-    Task<User>? GetUserByIdAsync(int id);
+    Task<User?> GetUserByIdAsync(int id);
 
     Task CreateUserAsync(User user);
 
@@ -15,4 +15,6 @@ public interface IUserRepository
 
     //IMPLIMENT THIS 
     Task DeleteUserAsync(User user);
+
+    Task<User?> GetUserByEmailAsync(string email);
 }

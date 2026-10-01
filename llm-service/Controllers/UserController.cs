@@ -86,6 +86,27 @@ namespace Backend.Controllers
 
         }
 
+        [HttpPost("Login")]
+        public async Task<IActionResult> LoginUser([FromBody] LoginDTO loginDto)
+        {
+            try
+            {
+                var user = await _userService.LoginUserAsync(loginDto.Email, loginDto.Password);
+
+                if (user is null)
+                {
+                    return Unauthorized();
+                }
+
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+                return StatusCode(500, "A server error occurred while processing the request.");
+            }
+        }
+
     }
 }
 

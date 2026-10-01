@@ -5,15 +5,18 @@ import { MyForm } from "../Form/MyForm";
 import { useState } from "react";
 import { type Props, PostPromt } from "../../api/ChatApi/GetChatPrompt";
 
+
 /* Displays the chat page with messages and a message input */
+const apiUrl = import.meta.env.VITE_API_URL;
 export function ChatPage() {
   const [response, setResponse] = useState("");
   async function handleSend(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
+    const localUrl = "http://localhost:5065";
     const sendR: Props = {
-      url: "http://localhost:5065/chat",
+      url: `${apiUrl}/chat`,
       dataValues: {
         ChatID: Number(formData.get("ChatID")),
         Content: [String(formData.get("Content"))],
