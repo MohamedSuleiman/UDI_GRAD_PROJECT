@@ -7,7 +7,6 @@ using LlmService.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
-//IChatClient chatClient = new OllamaApiClient(new Uri("http://localhost:11434/"), "deepseek-r1:latest");
 var builder = WebApplication.CreateBuilder(args);
 var ollamaUrl = builder.Configuration["Ollama:BaseUrl"]
     ?? throw new InvalidOperationException("Ollama:BaseUrl is missing.");
@@ -20,7 +19,6 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 //Add Repositoris here
-builder.Services.AddScoped<IChatMessageEnityRepository, ChatMessageEnityRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IChatMessageEnityRepository, ChatMessageEnityRepository>();
