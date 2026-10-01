@@ -26,10 +26,10 @@ public class ChatMessageEntityService
         }
 
         ChatMessageEntity chatMessageEntity = new();
-        chatMessageEntity.ChatID = ChatID;
+        chatMessageEntity.ChatId = ChatID;
         chatMessageEntity.Content = Content;
         chatMessageEntity.Role = "User";
-        
+
         await _chatMessageEnityRepository.CreateChat(chatMessageEntity);
         String response = await _client.GetUserPromt(ChatID, Content);
         // oppdater den i databasen ()
