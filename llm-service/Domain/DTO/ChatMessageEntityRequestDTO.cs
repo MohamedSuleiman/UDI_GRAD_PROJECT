@@ -2,7 +2,7 @@ using System;
 
 namespace Backend.Domain.DTO;
 
-public class ChatMessageEntityDTO
+public class ChatMessageEntityRequestDTO
 {
     public string Content {get; set;} = string.Empty;
 

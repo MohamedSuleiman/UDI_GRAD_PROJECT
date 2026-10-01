@@ -1,6 +1,6 @@
 public class ChatInputDTO
 {
-    public int ChatId { get; set; }
+    public int ChatID { get; set; }
     public string[] Content { get; set; } = [];
 
 }
