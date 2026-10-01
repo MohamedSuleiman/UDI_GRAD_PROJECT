@@ -34,6 +34,8 @@ public class ChatMessageEntityService
         return new ChatMessageEntityResponseDTO
         {
             Id = chatMessageEntity.Id,
+            ChatId = ChatID,
+            promt = Content,
             response = response,
 
         };
