@@ -12,6 +12,8 @@ export function ChatPage() {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
+    const url = "https://lmk-chat-backend.kindglacier-bd9579ed.norwayeast.azurecontainerapps.io";
+    const localUrl = "http://localhost:5065";
     const sendR: Props = {
       url: "http://localhost:5065/chat",
       dataValues: {
