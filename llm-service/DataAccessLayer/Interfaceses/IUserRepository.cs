@@ -14,5 +14,5 @@ public interface IUserRepository
     Task UpdateUserAsync(User user);
 
     //IMPLIMENT THIS 
-    Task DeleteUser(User user);
+    Task DeleteUserAsync(User user);
 }
