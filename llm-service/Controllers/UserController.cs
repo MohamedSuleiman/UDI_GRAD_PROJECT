@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Backend.BusinessLogic.UserService;
 using Backend.Domain.DTO;
 using LlmService.Domain.Enum;
@@ -7,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Backend.Controllers
+
+// sins we are using Attribute [ApiController] ASP.NET automaticly checks
+//  for ModelValidation befor reaching Controller class. 
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -33,22 +37,53 @@ namespace Backend.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
+            // if (!ModelState.IsValid)
+            // {
+            //     return ValidationProblem(ModelState);
+            // }
 
-            if (user is null)
+            try
             {
-                return NotFound();
+                var user = await _userService.GetUserByIdAsync(id);
+
+                if (user is null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine($"Error: {e.Message}");
+                return NotFound("Cant find user");
+
             }
 
-            return Ok(user);
+
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserDto createUserDto)
         {
-            var user = await _userService.CreateUserAsync(createUserDto);
+            // if (!ModelState.IsValid)
+            // {
+            //     return ValidationProblem(ModelState);
+            // }
 
-            return Ok(user);
+            try
+            {
+                var user = await _userService.CreateUserAsync(createUserDto);
+                return Ok(user);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+                return StatusCode(500, "A server error occurred while processing the request.");
+            }
+
         }
 
     }
