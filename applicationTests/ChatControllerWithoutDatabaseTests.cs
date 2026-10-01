@@ -33,7 +33,7 @@ public class ChatControllerWithoutDatabaseTests
 
         var result = await controller.sendPrompt(new ChatInputDTO
         {
-            UserID = 1,
+            ChatId = 1,
             Content = ["Hello"]
         });
 

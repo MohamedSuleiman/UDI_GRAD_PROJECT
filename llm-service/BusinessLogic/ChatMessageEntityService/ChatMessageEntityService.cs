@@ -9,22 +9,23 @@ namespace Backend.BusinessLogic.ChatMessageEntityService;
 public class ChatMessageEntityService
 {
     private IChatMessageEnityRepository _chatMessageEnityRepository;
-    private IClientO _client; 
+    private IClientO _client;
 
     // Husk Å dependency injecte dette her;
-    public ChatMessageEntityService (IChatMessageEnityRepository chatMessageEnityRepository, IClientO client) {
+    public ChatMessageEntityService(IChatMessageEnityRepository chatMessageEnityRepository, IClientO client)
+    {
         _chatMessageEnityRepository = chatMessageEnityRepository;
         _client = client;
     }
-    public async Task<ChatMessageEntityResponseDTO> CreateChat(int ChatID, string Content) 
+    public async Task<ChatMessageEntityResponseDTO> CreateChat(int ChatID, string Content)
     {
 
-       if (string.IsNullOrWhiteSpace(Content))
+        if (string.IsNullOrWhiteSpace(Content))
         {
             throw new ArgumentException("Message content cannot be empty.", nameof(Content));
         }
 
-        ChatMessageEntity chatMessageEntity = new ();
+        ChatMessageEntity chatMessageEntity = new();
         chatMessageEntity.ChatId = ChatID;
         chatMessageEntity.Content = Content;
         chatMessageEntity.Role = "User";
@@ -35,7 +36,7 @@ public class ChatMessageEntityService
             Id = chatMessageEntity.Id,
             response = response,
 
-       };
+        };
 
     }
 
