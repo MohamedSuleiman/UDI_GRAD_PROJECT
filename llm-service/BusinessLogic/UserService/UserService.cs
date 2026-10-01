@@ -22,10 +22,9 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<User> GetUserByIdAsync(int id)
+    public async Task<User?> GetUserByIdAsync(int id)
     {
-        User user = await _userRepository.GetUserByIdAsync(id);
-        return user;
+        return await _userRepository.GetUserByIdAsync(id);
     }
 
     public async Task<User> CreateUserAsync(CreateUserDto dto)
@@ -84,7 +83,7 @@ public class UserService : IUserService
 
     public async Task<User?> DeleteUserAsync(int id)
     {
-        User user = await _userRepository.GetUserByIdAsync(id);
+        User? user = await _userRepository.GetUserByIdAsync(id);
 
         if (user == null)
         {
@@ -95,6 +94,23 @@ public class UserService : IUserService
 
         return user;
 
+    }
+
+    public async Task<User?> LoginUserAsync(string email, string password)
+    {
+        User? user = await _userRepository.GetUserByEmailAsync(email);
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        if (user.Password != password)
+        {
+            return null;
+        }
+
+        return user;
     }
 
 /*
