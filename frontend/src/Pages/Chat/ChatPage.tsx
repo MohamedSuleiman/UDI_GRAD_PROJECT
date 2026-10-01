@@ -21,7 +21,6 @@ export function ChatPage() {
     };
     const data = await PostPromt(sendR);
     setResponse(data);
-    console.log(response);
   }
   return (
     <div className="chat">
