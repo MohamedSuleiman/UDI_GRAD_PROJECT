@@ -7,6 +7,7 @@ using LlmService.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
+using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 var ollamaUrl = builder.Configuration["Ollama:BaseUrl"]
     ?? throw new InvalidOperationException("Ollama:BaseUrl is missing.");
@@ -14,7 +15,13 @@ var ollamaUrl = builder.Configuration["Ollama:BaseUrl"]
 // Add services here
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ChatService>();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter()
+        );
+    });
 
 builder.Services.AddOpenApi();
 

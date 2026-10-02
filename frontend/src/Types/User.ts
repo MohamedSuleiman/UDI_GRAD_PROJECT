@@ -7,7 +7,6 @@ export interface User {
     userUsage: string;
 }
 export interface CreateUserRequest {
-    id: number;
     firstName: string;
     lastName: string;
     email: string;
