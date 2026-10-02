@@ -4,7 +4,7 @@ export type Props = {
     url: string,
     dataValues: {
         ChatID: number,
-        Content: string []
+        Content: string[]
     }
 }
 export async function GetChatPrompt(): Promise<string> {
@@ -13,11 +13,11 @@ export async function GetChatPrompt(): Promise<string> {
     return response.data;
 }
 
-export async function PostPromt({url, dataValues}:Props) {
+export async function PostPromt({ url, dataValues }: Props) {
     const response = await axios({
         method: 'post',
         url: `${url}`,
         data: dataValues
     });
-    return response.data.response;
+    return response.data;
 }

@@ -24,6 +24,7 @@ public class OllamaClient : IClientO
         List<ChatMessage> messages = new();
         messages.Add(new(ChatRole.User, promt));
 
+
         string response = "";
         await foreach (var token in _chatClient.GetStreamingResponseAsync(messages))
         {

@@ -4,12 +4,13 @@ import "../../index.css";
 import { MyForm } from "../Form/MyForm";
 import { useState } from "react";
 import { type Props, PostPromt } from "../../api/ChatApi/GetChatPrompt";
+import type { Message } from "../../Types/Message";
 
 
 /* Displays the chat page with messages and a message input */
 const apiUrl = import.meta.env.VITE_API_URL;
 export function ChatPage() {
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState<Message>();
   async function handleSend(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.target;
@@ -30,7 +31,9 @@ export function ChatPage() {
       <h2>Chat</h2>
       <div>
         <h3>Svaret på promt</h3>
-        <p>{response}</p>
+        <p>{response?.chatId}</p>
+        <p>{response?.content}</p>
+        <p>{response?.respons}</p>
       </div>
 
       {/* Input field for writing and sending a new message */}
