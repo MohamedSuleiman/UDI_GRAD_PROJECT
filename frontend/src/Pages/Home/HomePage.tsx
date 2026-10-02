@@ -21,24 +21,30 @@ export function HomePage() {
     <div className="home">
       <div className="card-container">
         {/* Navigation to the different pages */}
-        <a href="/Chat" className="home-card chat-style-card">
-          <img id="chat-icon" src="../../src/assets/chat.png" alt="Logo" />
-          <nav className="card-title">Want to Chat</nav>
-          <p>You want to chat with our chatbot!</p>
-        </a>
-        <a href="/Login" className="home-card chat-style-card">
+        <a className="home-card chat-style-card">
           <img
             id="chat-icon"
             src="../../src/assets/random-fact.png"
             alt="fact-icon"
           />
           <span className="card-title">Did you know?</span>
-          <p>Octopuses have three hearts</p>
+          <p>LLM services ....</p>
+        </a>
+
+        <a href="/Chat" className="home-card chat-style-card">
+          <img id="chat-icon" src="../../src/assets/chat.png" alt="Logo" />
+          <nav className="card-title">Want to Chat</nav>
+          <p>You want to chat with our chatbot!</p>
         </a>
 
         <a href="/CreateUser" className="home-card chat-style-card">
-          <span className="card-title">AI Assistance</span>
-          <p>Get support with questions, writing, and problem-solving.</p>
+          <img
+            id="chat-icon"
+            src="../../src/assets/create-user.png"
+            alt="Logo"
+          />
+          <nav className="card-title">Create User</nav>
+          <p>Click here to create a new user</p>
         </a>
       </div>
     </div>
