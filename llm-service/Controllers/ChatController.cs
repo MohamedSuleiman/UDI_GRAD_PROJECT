@@ -24,7 +24,7 @@ public class ChatController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> sendPrompt(ChatInputDTO chatInput)
     {
-       
+
         if (chatInput.Content == null || chatInput.Content.Length == 0)
         {
             return BadRequest(new ProblemDetails
@@ -42,7 +42,7 @@ public class ChatController : ControllerBase
 
             string prompt = string.Join("\n", chatInput.Content);
 
-            var response = await _chatMessageEnityService.CreateChatMessageEntity(chatInput.ChatID, prompt);
+            ChatMessageEntityResponseDTO response = await _chatMessageEnityService.CreateChatMessageEntity(chatInput.ChatID, prompt);
 
             return Ok(response);
         }
@@ -85,7 +85,7 @@ public class ChatController : ControllerBase
         }
     }
 
-    
+
 
 }
 
