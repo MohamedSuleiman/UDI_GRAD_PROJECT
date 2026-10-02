@@ -4,6 +4,7 @@ import { ChatPage } from "./Pages/Chat/ChatPage";
 import LoginPage from "./Pages/Login/LoginPage";
 import { DropDownHeader } from "./Components/Header/Header";
 import CreateUserPage from "./Pages/createUserPage/CreateUserPage";
+import { UserAccount } from "./Pages/Account/UserAccount";
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
           path="/CreateUser"
           element={<CreateUserPage />}
         />
+        <Route
+          path="/Account"
+          element={<UserAccount />} />
+        
       </Routes>
     </BrowserRouter>
   );
