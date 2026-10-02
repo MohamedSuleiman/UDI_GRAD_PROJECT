@@ -86,11 +86,10 @@ public class ChatController : ControllerBase
         }
     }
 
-  [HttpGet]
-  [Route("chats")]
-   public async Task<ActionResult<List<ChatMessageEntity>>> GetChatMessages([FromBody]int ChatId)
+  [HttpGet("{chatId:int}/messages")]
+   public async Task<ActionResult<List<ChatMessageEntity>>> GetChatMessages(int chatId)
    {
-        List<ChatMessageEntity> chatMessages = await _chatMessageEnityService.GetChatMessages(ChatId);
+        List<ChatMessageEntity> chatMessages = await _chatMessageEnityService.GetChatMessages(chatId);
         return Ok(chatMessages);
    }
 
