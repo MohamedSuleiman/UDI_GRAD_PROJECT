@@ -11,7 +11,6 @@ public class ChatMessageEntityService
     private IChatMessageEnityRepository _chatMessageEnityRepository;
     private IClientO _client;
 
-    // Husk Å dependency injecte dette her;
     public ChatMessageEntityService(IChatMessageEnityRepository chatMessageEnityRepository, IClientO client)
     {
         _chatMessageEnityRepository = chatMessageEnityRepository;
@@ -45,6 +44,12 @@ public class ChatMessageEntityService
 
         };
 
+    }
+
+    public async Task<List<ChatMessageEntity>> GetChatMessages(int chatId)
+    {
+        List<ChatMessageEntity> messages = await _chatMessageEnityRepository.GetChatMessages(chatId);
+        return messages;
     }
 
 

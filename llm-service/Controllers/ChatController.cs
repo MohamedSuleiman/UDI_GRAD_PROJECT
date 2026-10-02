@@ -3,6 +3,7 @@ using LlmService.BusinessLogic;
 using Backend.BusinessLogic.ChatMessageEntityService;
 using Backend.DataAccessLayer.repositories;
 using Backend.Domain.DTO;
+using LlmService.Domain.Model;
 namespace LlmService.Controllers;
 
 [ApiController]
@@ -84,6 +85,14 @@ public class ChatController : ControllerBase
             return StatusCode(500, "A server error occurred while processing the request.");
         }
     }
+
+  [HttpGet]
+  [Route("chats")]
+   public async Task<ActionResult<List<ChatMessageEntity>>> GetChatMessages([FromBody]int ChatId)
+   {
+        List<ChatMessageEntity> chatMessages = await _chatMessageEnityService.GetChatMessages(ChatId);
+        return Ok(chatMessages);
+   }
 
     
 
