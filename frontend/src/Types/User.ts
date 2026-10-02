@@ -3,14 +3,14 @@ export interface User {
     firstName: string;
     lastName: string;
     email: string;
-    nationality: string;
-    userUsage: string;
+    nationality: number;
+    userUsage: number;
 }
 export interface CreateUserRequest {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
-    nationality: string;
-    userUsage: string;
+    nationality: number;
+    userUsage: number;
 }
