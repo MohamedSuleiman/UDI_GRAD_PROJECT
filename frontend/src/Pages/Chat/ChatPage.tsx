@@ -33,7 +33,7 @@ export function ChatPage() {
         <h3>Svaret på promt</h3>
         <p>{response?.chatId}</p>
         <p>{response?.content}</p>
-        <p>{response?.respons}</p>
+        <p>{response?.response}</p>
       </div>
 
       {/* Input field for writing and sending a new message */}

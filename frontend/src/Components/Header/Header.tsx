@@ -1,10 +1,10 @@
 import "./Header.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 export function DropDownHeader() {
   const navigate = useNavigate();
+  const routerLocation = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -18,11 +18,20 @@ export function DropDownHeader() {
           </Link>{" "}
         </nav>
         <div className="header-actions">
-          <nav className="log-in">
+          {routerLocation.state?.user ? (
+            <Link
+              to="/"
+              className="login-link"
+              onClick={() => navigate("/", { replace: true, state: null })}
+            >
+              ←］ Log out
+            </Link>
+          ) : (
             <Link to="/Login" className="login-link">
               →］Log in
             </Link>
-          </nav>
+          )}
+
           <div className="menu-container">
             <button
               className={`menu-btn${menuOpen ? " menu-btn-open" : ""}`}
@@ -45,7 +54,13 @@ export function DropDownHeader() {
             {menuOpen && (
               <div className="dropdown-menu">
                 <button onClick={() => navigate("/Chat")}>Chat</button>
-                <button onClick={() => navigate("/Account")}>Account</button>
+                <button
+                  onClick={() =>
+                    navigate("/Account", { state: routerLocation.state })
+                  }
+                >
+                  Account
+                </button>
               </div>
             )}
           </div>
