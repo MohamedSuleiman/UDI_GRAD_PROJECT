@@ -98,6 +98,7 @@ namespace Backend.Controllers
                     return Unauthorized();
                 }
 
+                // call the chatService to create a new chat for the user
                 return Ok(user);
             }
             catch (Exception e)

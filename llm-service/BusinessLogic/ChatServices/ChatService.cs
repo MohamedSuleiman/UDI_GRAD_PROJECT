@@ -34,6 +34,8 @@ public class ChatService
 
     public async Task<Chat> CreateChat(CreateChatDTO createChatDto)
     {
+        //if chat content is empty delete the chat and return null
+        //else create a new chat and return the chat object 
         if (string.IsNullOrWhiteSpace(createChatDto.Name))
         {
             throw new ArgumentException("Chat name cannot be empty.", nameof(createChatDto.Name));
