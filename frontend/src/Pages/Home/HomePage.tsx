@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
-import { GetChatPrompt } from "../../api/ChatApi/GetChatPrompt";
+// import { useEffect, useState } from "react";
+// import { GetChatPrompt } from "../../api/ChatApi/GetChatPrompt";
 import "./HomePage.css";
 
 export function HomePage() {
-  const [answer, setAnswer] = useState("");
+  // const [answer, setAnswer] = useState("");
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const data = await GetChatPrompt();
-        setAnswer(data);
-      } catch (error) {
-        console.error("Could not load chat response:", error);
-      }
-    }
+  // useEffect(() => {
+  //   async function loadData() {
+  //     try {
+  //       const data = await GetChatPrompt();
+  //       // setAnswer(data);
+  //     } catch (error) {
+  //       console.error("Could not load chat response:", error);
+  //     }
+  //   }
 
-    loadData();
-  }, []);
+  //   loadData();
+  // }, []);
   return (
     <div className="home">
       <div className="card-container">
