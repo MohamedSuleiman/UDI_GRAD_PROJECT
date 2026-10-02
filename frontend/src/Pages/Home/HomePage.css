@@ -3,10 +3,10 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
-  font-family: Arial, "Helvetica Neue", "Helvetica", Helvetica, sans-serif;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   text-align: center;
 
   padding: 20px;
@@ -22,26 +22,51 @@
 .home h3 {
   font-size: 18px;
   font-weight: normal;
-  color: #666;
+  color: #a29e9e;
   margin-bottom: 30px;
 }
 
 .home a {
   margin: 8px;
-  background-color: lightgray;
+  background-color: rgba(235, 239, 239, 0.734);
   align-items: center;
   padding: 10px 5px;
 }
 
-#chat {
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+
+  width: 100%;
+  max-width: 1000px;
+
+  margin-top: 30px;
+}
+.chat-style-card {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.home-card {
   text-decoration: bold;
   margin-bottom: 20px;
   color: black;
   font-weight: bold;
   text-decoration: none;
+  width: 250px;
+  height: 220px;
 }
 
-#chat p {
+.home-card p {
   margin: 0;
   font-size: 16px;
   color: black;
@@ -49,11 +74,13 @@
   text-decoration: none;
 }
 
-#chat p:hover {
+.home-card p:hover {
   text-decoration: none;
 }
-
-#chat:hover #chattext {
+.home-card:hover {
+  background-color: rgba(184, 190, 190, 0.734);
+}
+.home-card:hover .card-title {
   text-decoration: underline;
 }
 
