@@ -2,19 +2,28 @@ import type { CreateUserForm } from "../../Components/CreateUser/CreateUser";
 import type { User } from "../../Types/User";
 import type { UserLogin } from "../../Types/UserLogin";
 
-const userApiUrl = "http://localhost:5065/api/User";
+const apiUrl = (
+    import.meta.env.VITE_API_URL || "http://localhost:5065"
+).replace(/\/$/, "");
+
+const userApiUrl = `${apiUrl}/api/User`;
+
+async function checkResponse(response: Response): Promise<void> {
+    if (!response.ok) {
+        const message = await response.text();
+
+        throw new Error(
+            message || `Request failed. Status: ${response.status}`
+        );
+    }
+}
 
 export async function GetUserById(id: number): Promise<User> {
     const response = await fetch(`${userApiUrl}/${id}`);
 
-    if (!response.ok) {
-        throw new Error(
-            `Failed to fetch user with ID ${id}. Status: ${response.status}`
-        );
-    }
+    await checkResponse(response);
 
-    const user: User = await response.json();
-    return user;
+    return await response.json();
 }
 
 export async function CreateUser(
@@ -28,21 +37,16 @@ export async function CreateUser(
         body: JSON.stringify(user),
     });
 
-    if (!response.ok) {
-        const errorMessage = await response.text();
+    await checkResponse(response);
 
-        throw new Error(
-            errorMessage ||
-            `Failed to create user. Status: ${response.status}`
-        );
-    }
-
-    const createdUser: User = await response.json();
-    return createdUser;
+    return await response.json();
 }
 
-export async function LoginUser(email: string, password: string): Promise<UserLogin> {
-    const response = await fetch(`${userApiUrl}/login`, {
+export async function LoginUser(
+    email: string,
+    password: string
+): Promise<UserLogin> {
+    const response = await fetch(`${userApiUrl}/Login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -50,15 +54,7 @@ export async function LoginUser(email: string, password: string): Promise<UserLo
         body: JSON.stringify({ email, password }),
     });
 
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(
-            errorMessage ||
-            `Failed to login user. Status: ${response.status}`
-        );
-    }
+    await checkResponse(response);
 
-    const userLogin: UserLogin = await response.json();
-    return userLogin;
+    return await response.json();
 }
-

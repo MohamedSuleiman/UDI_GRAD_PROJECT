@@ -10,11 +10,13 @@ public class ChatMessageEntityService
 {
     private IChatMessageEnityRepository _chatMessageEnityRepository;
     private IClientO _client;
+    private readonly IChatRepository _chatRepository;
 
-    public ChatMessageEntityService(IChatMessageEnityRepository chatMessageEnityRepository, IClientO client)
+    public ChatMessageEntityService(IChatMessageEnityRepository chatMessageEnityRepository, IClientO client, IChatRepository chatRepository)
     {
         _chatMessageEnityRepository = chatMessageEnityRepository;
         _client = client;
+        _chatRepository = chatRepository;
     }
     public async Task<ChatMessageEntityResponseDTO> CreateChatMessageEntity(int ChatID, string Content)
     {
@@ -23,6 +25,13 @@ public class ChatMessageEntityService
         if (string.IsNullOrWhiteSpace(Content))
         {
             throw new ArgumentException("Message content cannot be empty.", nameof(Content));
+        }
+
+        var chat = await _chatRepository.GetChatByIdAsync(ChatID);
+
+        if (chat is null)
+        {
+            throw new KeyNotFoundException("Chat was not found.");
         }
 
         ChatMessageEntity chatMessageEntity = new();

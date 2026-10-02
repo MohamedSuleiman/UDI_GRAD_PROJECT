@@ -44,7 +44,7 @@ public class ChatController : ControllerBase
             string prompt = string.Join("\n", chatInput.Content);
 
             ChatMessageEntityResponseDTO response = await _chatMessageEnityService.CreateChatMessageEntity(chatInput.ChatID, prompt);
-
+            //uses 
             return Ok(response);
         }
         catch (Exception ex)
@@ -86,12 +86,12 @@ public class ChatController : ControllerBase
         }
     }
 
-  [HttpGet("{chatId:int}/messages")]
-   public async Task<ActionResult<List<ChatMessageEntity>>> GetChatMessages(int chatId)
-   {
+    [HttpGet("{chatId:int}/messages")]
+    public async Task<ActionResult<List<ChatMessageEntity>>> GetChatMessages(int chatId)
+    {
         List<ChatMessageEntity> chatMessages = await _chatMessageEnityService.GetChatMessages(chatId);
         return Ok(chatMessages);
-   }
+    }
 
 
 

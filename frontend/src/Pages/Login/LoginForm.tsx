@@ -10,7 +10,9 @@ interface LoginFormProps {
   onLoginSubmit: (values: LoginFormValues) => Promise<void>;
 }
 
-function LoginForm({ onLoginSubmit }: LoginFormProps) {
+export default function LoginForm({
+  onLoginSubmit,
+}: LoginFormProps) {
   const initialValues: LoginFormValues = {
     email: "",
     password: "",
@@ -18,7 +20,7 @@ function LoginForm({ onLoginSubmit }: LoginFormProps) {
 
   return (
     <div className="form">
-      <h3> Log in</h3>
+      <h3>Login</h3>
 
       <Formik
         initialValues={initialValues}
@@ -33,8 +35,8 @@ function LoginForm({ onLoginSubmit }: LoginFormProps) {
               <Field
                 id="email"
                 name="email"
-                placeholder="Your Email..."
                 type="email"
+                placeholder="Your Email..."
                 autoComplete="username"
                 required
               />
@@ -43,8 +45,8 @@ function LoginForm({ onLoginSubmit }: LoginFormProps) {
               <Field
                 id="password"
                 name="password"
-                placeholder="Your Password..."
                 type="password"
+                placeholder="Your Password..."
                 autoComplete="current-password"
                 required
               />
@@ -63,5 +65,3 @@ function LoginForm({ onLoginSubmit }: LoginFormProps) {
     </div>
   );
 }
-
-export default LoginForm;
