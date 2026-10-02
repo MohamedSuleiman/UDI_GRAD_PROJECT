@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GetChatPrompt } from "../../Api/ChatApi/GetChatPrompt";
+import { GetChatPrompt } from "../../api/ChatApi/GetChatPrompt";
 import "./HomePage.css";
 
 export function HomePage() {

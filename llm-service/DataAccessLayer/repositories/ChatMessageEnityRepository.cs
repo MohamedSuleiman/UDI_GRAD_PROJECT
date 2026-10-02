@@ -35,5 +35,12 @@ public class ChatMessageEnityRepository : IChatMessageEnityRepository
     {
         throw new NotImplementedException();
     }
+
+    public async Task<List<ChatMessageEntity>> GetChatMessages(int ChatId)
+    {
+        List<ChatMessageEntity> listOfChatsForGivenChatID = await _db.ChatMessageEntities.
+        Where(msg => msg.ChatId == ChatId).ToListAsync();
+        return listOfChatsForGivenChatID;
+    }
 }
     
