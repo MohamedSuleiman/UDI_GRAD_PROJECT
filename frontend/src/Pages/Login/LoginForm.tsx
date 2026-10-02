@@ -18,7 +18,7 @@ function LoginForm({ onLoginSubmit }: LoginFormProps) {
 
   return (
     <div className="form">
-      <h3>Login</h3>
+      <h3> Log in</h3>
 
       <Formik
         initialValues={initialValues}

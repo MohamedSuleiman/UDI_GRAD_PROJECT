@@ -21,7 +21,7 @@ export function HomePage() {
     <div className="home">
       <div className="card-container">
         {/* Navigation to the different pages */}
-        <a href="/Chat" className="home-card">
+        <a href="/Chat" className="home-card chat-style-card">
           <img id="chat-icon" src="../../src/assets/chat.png" alt="Logo" />
           <nav className="card-title">Want to Chat</nav>
           <p>You want to chat with our chatbot!</p>
