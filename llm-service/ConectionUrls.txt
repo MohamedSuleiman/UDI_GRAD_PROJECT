@@ -1,0 +1,7 @@
+Own local ollama server with Gpu Access
+    "BaseUrl": "http://100.113.48.121:11434/"
+
+local ollama server:
+"BaseUrl": "http://localhost:11434/"
+
+
