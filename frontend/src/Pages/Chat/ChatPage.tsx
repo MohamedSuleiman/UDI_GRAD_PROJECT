@@ -3,7 +3,8 @@ import "../../index.css";
 import axios from "axios";
 import { useRef, useState } from "react";
 import type { FormEvent } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../Context/authContext/AuthContext";
 import {
   CreateChat,
   PostPromt,
@@ -11,13 +12,7 @@ import {
 
 const apiUrl = (
   import.meta.env.VITE_API_URL || "http://localhost:5065"
-).replace(/\/$/, "");
-
-interface ChatPageState {
-  user?: {
-    id: number;
-  };
-}
+).replace(/\/+$/, "");
 
 interface DisplayMessage {
   key: number;
@@ -48,9 +43,8 @@ function getErrorMessage(error: unknown): string {
 }
 
 export function ChatPage() {
-  const location = useLocation();
-  const state = location.state as ChatPageState | null;
-  const userId = state?.user?.id;
+  const { user } = useAuth();
+  const userId = user?.id;
 
   const [chatId, setChatId] = useState<number | null>(null);
   const [prompt, setPrompt] = useState("");
@@ -69,8 +63,8 @@ export function ChatPage() {
 
     if (
       !content ||
-      !Number.isInteger(userId) ||
       !userId ||
+      !Number.isInteger(userId) ||
       userId <= 0 ||
       sendingRef.current
     ) {
@@ -82,7 +76,7 @@ export function ChatPage() {
 
     const messageKey = nextMessageKey.current++;
 
-    // Display the question before waiting for Ollama.
+    // Show the question immediately.
     setMessages((previous) => [
       ...previous,
       {
@@ -97,7 +91,7 @@ export function ChatPage() {
     try {
       let currentChatId = chatId;
 
-      // First Send creates the chat for the logged-in user.
+      // Create a chat for the first message.
       if (currentChatId === null) {
         const chat = await CreateChat(
           userId,
@@ -105,14 +99,16 @@ export function ChatPage() {
         );
 
         if (!Number.isInteger(chat.id) || chat.id <= 0) {
-          throw new Error("The backend returned an invalid chat ID.");
+          throw new Error(
+            "The backend returned an invalid chat ID."
+          );
         }
 
         currentChatId = chat.id;
         setChatId(chat.id);
       }
 
-      // Later Sends use the same chat ID.
+      // Send subsequent messages to the same chat.
       const result = await PostPromt({
         url: `${apiUrl}/Chat`,
         dataValues: {
@@ -155,8 +151,8 @@ export function ChatPage() {
   }
 
   if (
-    !Number.isInteger(userId) ||
     !userId ||
+    !Number.isInteger(userId) ||
     userId <= 0
   ) {
     return (
