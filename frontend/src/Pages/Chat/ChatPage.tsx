@@ -194,7 +194,7 @@ export function ChatPage() {
           </div>
         ))}
       </div>
-
+      
       <form onSubmit={handleSend}>
         <label htmlFor="Content">Your message</label>
 
