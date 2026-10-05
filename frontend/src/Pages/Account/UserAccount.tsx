@@ -57,7 +57,6 @@ export function UserAccount() {
           setUser(result);
           setFirstName(result.firstName);
           setLastName(result.lastName);
-          setEmail(result.email);
           // setNationality(result.nationality ?? "");
           // setUserUsage(result.userUsage ?? "" );
         }
