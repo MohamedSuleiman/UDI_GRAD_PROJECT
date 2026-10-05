@@ -90,6 +90,14 @@ public class ChatController : ControllerBase
     public async Task<ActionResult<List<ChatMessageEntity>>> GetChatMessages(int chatId)
     {
         List<ChatMessageEntity> chatMessages = await _chatMessageEnityService.GetChatMessages(chatId);
+        if (chatMessages == null)
+        {
+            return NotFound();
+        }
+        if (chatMessages?.Count() == 0)
+        {
+            return  NoContent();
+        }
         return Ok(chatMessages);
     }
 
