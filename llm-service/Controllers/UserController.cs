@@ -15,11 +15,6 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    [HttpGet]
-    public IActionResult RootMethod()
-    {
-        return Ok("test");
-    }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetUserById(int id)
@@ -30,7 +25,7 @@ public class UserController : ControllerBase
 
             if (user is null)
             {
-                return NotFound();
+                return NotFound("user not found");
             }
 
             return Ok(user);
