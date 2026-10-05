@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../Context/authContext/AuthContext";
 import { GetUserById } from "../../api/UserApi/UserApi";
 import type { User } from "../../Types/User";
+import { ChangeUserInformation } from "../../api/UserApi/UserApi";
 
-const nationalities = ["Norwegian", "Swedish", "Danish"];
-const userUsages = ["Work", "Study", "Hobby"];
 
 export function UserAccount() {
   const { user: loggedInUser } = useAuth();
@@ -14,6 +13,29 @@ export function UserAccount() {
 
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState("");
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  // const [nationality, setNationality] = useState("");
+  // const [userUsage, setUserUsage] = useState("");
+
+  async function handleSave() {
+    if (!user) return;
+
+    try {
+      await ChangeUserInformation(user.id, {
+        firstName,
+        lastName,
+      });
+
+      setUser({ ...user, firstName, lastName });
+      alert("Information saved!");
+    } catch (error) {
+      console.error(error);
+      alert("Could not save information.");
+    }
+  }
+
 
   useEffect(() => {
     let active = true;
@@ -25,12 +47,19 @@ export function UserAccount() {
       return;
     }
 
+
+
     async function loadUser(id: number): Promise<void> {
       try {
         const result = await GetUserById(id);
 
         if (active) {
           setUser(result);
+          setFirstName(result.firstName);
+          setLastName(result.lastName);
+          setEmail(result.email);
+          // setNationality(result.nationality ?? "");
+          // setUserUsage(result.userUsage ?? "" );
         }
       } catch {
         if (active) {
@@ -40,6 +69,7 @@ export function UserAccount() {
     }
 
     void loadUser(userId);
+
 
     return () => {
       active = false;
@@ -74,6 +104,8 @@ export function UserAccount() {
     );
   }
 
+
+
   return (
     <div className="chat">
       <h2>Account</h2>
@@ -85,10 +117,32 @@ export function UserAccount() {
         </p>
         <p>Email: {user.email}</p>
         <p>
-          Nationality: {nationalities[user.nationality] ?? "Unknown"}
+          Nationality: {user.nationality ?? "Unknown"}
         </p>
-        <p>Usage: {userUsages[user.userUsage] ?? "Unknown"}</p>
+        <p>Usage: {user.userUsage ?? "Unknown"}</p>
       </div>
+      --------------------------------------------------------
+      <div className="account-form">
+        <label>
+          First name:
+          <input
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Last name:
+          <input
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </label>
+        <button type="button" onClick={handleSave}>
+          Save changes
+        </button>
+      </div>
+      ---------------------------------------------------------
     </div>
   );
 }

@@ -20,7 +20,6 @@ public class ChatMessageEntityService
     }
     public async Task<ChatMessageEntityResponseDTO> CreateChatMessageEntity(int ChatID, string Content)
     {
-        //create chat and appand chat message entity to the chat and save it to the database
 
         if (string.IsNullOrWhiteSpace(Content))
         {

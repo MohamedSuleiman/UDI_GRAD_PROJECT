@@ -1,3 +1,4 @@
+import axios from "axios";
 import type { CreateUserForm } from "../../Components/CreateUser/CreateUser";
 import type { User } from "../../Types/User";
 import type { UserLogin } from "../../Types/UserLogin";
@@ -8,53 +9,47 @@ const apiUrl = (
 
 const userApiUrl = `${apiUrl}/api/User`;
 
-async function checkResponse(response: Response): Promise<void> {
-    if (!response.ok) {
-        const message = await response.text();
-
-        throw new Error(
-            message || `Request failed. Status: ${response.status}`
-        );
-    }
-}
 
 export async function GetUserById(id: number): Promise<User> {
-    const response = await fetch(`${userApiUrl}/${id}`);
-
-    await checkResponse(response);
-
-    return await response.json();
+    const response = await axios.get<User>(`${userApiUrl}/${id}`);
+    const user = await response.data;
+    return user;
 }
 
 export async function CreateUser(
     user: CreateUserForm
 ): Promise<User> {
-    const response = await fetch(userApiUrl, {
-        method: "POST",
+    const response = await axios.post(`${userApiUrl}`, user, {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(user),
     });
 
-    await checkResponse(response);
-
-    return await response.json();
+    return response.data;
 }
 
 export async function LoginUser(
     email: string,
     password: string
 ): Promise<UserLogin> {
-    const response = await fetch(`${userApiUrl}/Login`, {
-        method: "POST",
+    const response = await axios.post(`${userApiUrl}/login`, { email, password }, {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
     });
 
-    await checkResponse(response);
+    return response.data;
+}
 
-    return await response.json();
+export async function ChangeUserInformation(
+    id: number,
+    updatedUser: Partial<User>
+): Promise<User> {
+    const response = await axios.put(`${userApiUrl}/${id}`, updatedUser, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    return response.data;
 }

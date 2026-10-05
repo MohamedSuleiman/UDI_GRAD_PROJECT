@@ -51,7 +51,7 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task<User?> UpdateUserAsync(int id, UpdateUserDto dto)
+    public async Task<User?> UpdateUserInformationAsync(int id, UpdateUserDto dto)
     {
         User? user = await _userRepository.GetUserByIdAsync(id);
 

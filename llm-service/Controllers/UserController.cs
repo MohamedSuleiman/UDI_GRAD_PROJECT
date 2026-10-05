@@ -100,4 +100,30 @@ public class UserController : ControllerBase
             );
         }
     }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> ChangeUserInformation(
+        int id, [FromBody] UpdateUserDto updatedUser)
+    {
+        try
+        {
+            var user = await _userService.UpdateUserInformationAsync(id, updatedUser);
+
+            if (user is null)
+            {
+                return NotFound("User not found.");
+            }
+
+            return Ok(user);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+
+            return StatusCode(
+                500,
+                "A server error occurred while processing the request."
+            );
+        }
+    }
 }
