@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Link } from "react-router-dom";
+import {ViewChatMessages} from "../../Components/ViewChatMessages"
 import { useAuth } from "../../Context/authContext/AuthContext";
 import { CreateChat, PostPromt } from "../../api/ChatApi/GetChatPrompt";
 
@@ -144,6 +145,9 @@ export function ChatPage() {
 
   return (
     <div className="chat">
+      <div className="showChats">
+        <ViewChatMessages/>
+      </div>
       <h2>Chat</h2>
 
       <button type="button" onClick={handleNewChat} disabled={isSending}>
