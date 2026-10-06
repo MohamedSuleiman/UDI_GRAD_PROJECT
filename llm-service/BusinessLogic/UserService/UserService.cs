@@ -5,6 +5,7 @@ using Backend.Domain.DTO;
 using LlmService.Domain.Model;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend.BusinessLogic.UserService;
 
@@ -16,10 +17,12 @@ namespace Backend.BusinessLogic.UserService;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IPasswordHasher<User> _passwordHasher;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
     {
         _userRepository = userRepository;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<User?> GetUserByIdAsync(int id)
@@ -42,11 +45,11 @@ public class UserService : IUserService
             FirstName = dto.FirstName,
             LastName = dto.LastName,
             Email = dto.Email,
-            Password = dto.Password,
             Nationality = dto.Nationality,
             UserUsage = dto.UserUsage
 
         };
+        user.Password = _passwordHasher.HashPassword(user, dto.Password);
         await _userRepository.CreateUserAsync(user);
         return user;
     }
@@ -113,7 +116,9 @@ public class UserService : IUserService
             return null;
         }
 
-        if (user.Password != password)
+        var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.Password, password);
+
+        if (verificationResult == PasswordVerificationResult.Failed)
         {
             return null;
         }
@@ -121,35 +126,33 @@ public class UserService : IUserService
         return user;
     }
 
-    /*
+    
     // Missing storing of hashing and salt to finish the implementation of this method.
-        public async Task<User?> HashPasswordAsync(int id, string password)
+    public async Task<User?> HashPasswordAsync(int id, string password)
+    {
+        User? user = await _userRepository.GetUserByIdAsync(id);
+        if (user == null)
         {
-            User user = await _userRepository.GetUserByIdAsync(id);
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            // Generate a 128-bit salt using a sequence of
-            // cryptographically strong random bytes.
-            byte[] salt = RandomNumberGenerator.GetBytes(128/8); // Generate a random salt
-
-            // deriving a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
-            string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 100000,
-                numBytesRequested: 256 / 8));   
-
-            user.Password = hashedPassword;
-
-            await _userRepository.UpdateUserAsync(user);
-
-            return user;
+            return null;
         }
 
-    */
+        // Generate a 128-bit salt using a sequence of
+        // cryptographically strong random bytes.
+        byte[] salt = RandomNumberGenerator.GetBytes(128/8);
+
+        // deriving a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
+        string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: password,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 100000,
+            numBytesRequested: 256 / 8));   
+
+        user.Password = hashedPassword;
+
+        await _userRepository.UpdateUserAsync(user);
+
+        return user;
+    }
+
 }

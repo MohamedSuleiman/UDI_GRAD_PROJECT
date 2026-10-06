@@ -4,6 +4,8 @@ using Backend.DataAccessLayer.repositories;
 using LlmService;
 using LlmService.BusinessLogic;
 using LlmService.DataAccessLayer;
+using LlmService.Domain.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
@@ -15,6 +17,7 @@ var ollamaUrl = builder.Configuration["Ollama:BaseUrl"]
 // Add services here
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ChatService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
