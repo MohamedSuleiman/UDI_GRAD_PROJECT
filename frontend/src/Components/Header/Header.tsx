@@ -2,6 +2,7 @@ import "./Header.css";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../Context/authContext/AuthContext";
+import logo from "../../assets/LWY1.png";
 
 export function DropDownHeader() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export function DropDownHeader() {
     <div className="dropdown-header">
       <nav>
         <Link to="/" onClick={() => setMenuOpen(false)}>
-          <img src="../../src/assets/LWY1.png" alt="Logo" />
+          <img src={logo} alt="Logo" />
         </Link>
       </nav>
 

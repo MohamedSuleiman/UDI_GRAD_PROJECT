@@ -107,7 +107,8 @@ code {
 }
 
 .mainButton {
-  width: 100%;
+  width: 80px;
+  height: 30px;
   margin-top: 25px;
   padding: 13px;
 

@@ -17,7 +17,7 @@ export interface ChatMessage {
     response: string | null;
 }
 
-export type Props = {
+export interface Props {
     url: string;
     dataValues: {
         ChatID: number;
@@ -25,10 +25,7 @@ export type Props = {
     };
 };
 
-export async function CreateChat(
-    userId: number,
-    name: string
-): Promise<Chat> {
+export async function CreateChat( userId: number, name: string): Promise<Chat> {
     const response = await axios.post<Chat>(
         `${apiUrl}/Chat/create`,
         {
@@ -40,10 +37,7 @@ export async function CreateChat(
     return response.data;
 }
 
-export async function PostPromt({
-    url,
-    dataValues,
-}: Props): Promise<ChatMessage> {
+export async function PostPromt({url, dataValues}: Props): Promise<ChatMessage> {
     const response = await axios.post<ChatMessage>(
         url,
         dataValues

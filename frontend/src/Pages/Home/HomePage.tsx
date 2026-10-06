@@ -1,6 +1,9 @@
 // import { useEffect, useState } from "react";
 // import { GetChatPrompt } from "../../api/ChatApi/GetChatPrompt";
 import "./HomePage.css";
+import logo from "../../assets/random-fact.png";
+import logo2 from "../../assets/chat.png";
+import logo3 from "../../assets/create-user.png";
 
 export function HomePage() {
   // const [answer, setAnswer] = useState("");
@@ -22,17 +25,14 @@ export function HomePage() {
       <div className="card-container">
         {/* Navigation to the different pages */}
         <a className="home-card chat-style-card">
-          <img
-            id="chat-icon"
-            src="../../src/assets/random-fact.png"
-            alt="fact-icon"
-          />
+          <img src={logo} alt="Logo" />
+
           <span className="card-title">Did you know?</span>
           <p>LLM services ....</p>
         </a>
 
         <a href="/Chat" className="home-card chat-style-card">
-          <img id="chat-icon" src="../../src/assets/chat.png" alt="Logo" />
+          <img id="chat-icon" src={logo2} alt="Logo" />
           <nav className="card-title">Want to Chat</nav>
           <p>You want to chat with our chatbot!</p>
         </a>
@@ -40,7 +40,7 @@ export function HomePage() {
         <a href="/CreateUser" className="home-card chat-style-card">
           <img
             id="chat-icon"
-            src="../../src/assets/create-user.png"
+            src={logo3}
             alt="Logo"
           />
           <nav className="card-title">Create User</nav>
