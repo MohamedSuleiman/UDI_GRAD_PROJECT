@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CreateUserForm } from "../../Types/CreateUserForm";
+import type { CreateUserForm } from "../../Components/CreateUser/CreateUser";
 import type { User } from "../../Types/User";
 import type { UserLogin } from "../../Types/UserLogin";
 
