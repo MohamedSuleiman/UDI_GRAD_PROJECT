@@ -25,7 +25,7 @@ export function HomePage() {
       <div className="card-container">
         {/* Navigation to the different pages */}
         <a className="home-card chat-style-card">
-          <img src={logo} alt="Logo" />
+          <img id="chat-icon" src={logo} alt="Logo" />
 
           <span className="card-title">Did you know?</span>
           <p>LLM services ....</p>
@@ -38,11 +38,7 @@ export function HomePage() {
         </a>
 
         <a href="/CreateUser" className="home-card chat-style-card">
-          <img
-            id="chat-icon"
-            src={logo3}
-            alt="Logo"
-          />
+          <img id="chat-icon" src={logo3} alt="Logo" />
           <nav className="card-title">Create User</nav>
           <p>Click here to create a new user</p>
         </a>
