@@ -94,9 +94,7 @@ export function UserAccount() {
       <p>Loading account...</p>
     </div>;
   }
-
-
-
+  
   return (
     <div className="chat">
       <h2>Account</h2>

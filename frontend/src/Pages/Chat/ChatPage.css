@@ -1,8 +1,75 @@
 .chat {
-  width: 60%;
-  margin: 40px;
-  margin-left: 10%;
-  margin-top: 5%;
+  width: auto;
+  min-width: 0;
+  margin: 0;
+}
+
+.chat-workspace {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 28px;
+  width: min(1180px, calc(100% - 48px));
+  min-height: 70vh;
+  margin: 36px auto;
+}
+
+.chat-history {
+  min-width: 0;
+  padding-right: 16px;
+  border-right: 1px solid var(--border);
+  text-align: left;
+}
+
+.chat-history h2 {
+  margin: 0 0 16px;
+  font-size: 18px;
+}
+
+.chat-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chat-history-list button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 10px 12px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-h);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chat-history-list button:hover,
+.chat-history-list button.selected {
+  border-color: var(--border);
+  background: var(--social-bg);
+}
+
+.chat-history-list button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-history-list time,
+.chat-history-status {
+  color: var(--text);
+  font-size: 0.8rem;
+}
+
+.chat-history-error {
+  color: #b42318;
 }
 
 .chats {
@@ -75,9 +142,22 @@
 }
 
 @media (max-width: 640px) {
-  .chat {
-    width: auto;
-    margin: 32px 16px;
+  .chat-workspace {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    width: calc(100% - 32px);
+    margin: 24px auto;
+  }
+
+  .chat-history {
+    padding: 0 0 16px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .chat-history-list {
+    max-height: 180px;
+    overflow-y: auto;
   }
 
   .chat form {
@@ -115,4 +195,8 @@
   align-self: flex-start;
   background-color: gray;
   color: white;
+}
+
+#newChatButton {
+  font-size: 12px;
 }
