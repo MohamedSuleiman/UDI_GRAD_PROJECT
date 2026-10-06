@@ -56,6 +56,17 @@ public class ChatService
         await _chatRepository.CreateChatAsync(chat);
         return chat;
     }
+
+    public Task<List<Chat>> GetChatsByUserId(int userId)
+    {
+        if (userId <= 0)
+        {
+            throw new ArgumentException("User ID must be a positive integer.", nameof(userId));
+        }
+
+        return _chatRepository.GetChatsByUserIdAsync(userId);
+    }
+
     public async Task<Chat?> DeleteChat(int chatId)
     {
         var chat = await _chatRepository.GetChatByIdAsync(chatId);

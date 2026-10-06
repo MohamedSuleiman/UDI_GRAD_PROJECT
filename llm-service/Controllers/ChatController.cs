@@ -86,6 +86,30 @@ public class ChatController : ControllerBase
         }
     }
 
+    [HttpGet("user/{userId:int}")]
+    public async Task<ActionResult> GetChatsByUser(int userId)
+    {
+        try
+        {
+            var chats = await _chatService.GetChatsByUserId(userId);
+            return Ok(chats.Select(chat => new
+            {
+                chat.Id,
+                chat.Name,
+                chat.CreatedAt
+            }));
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new ProblemDetails
+            {
+                Title = "Invalid Request",
+                Detail = ex.Message,
+                Status = StatusCodes.Status400BadRequest
+            });
+        }
+    }
+
     [HttpGet("{chatId:int}/messages")]
     public async Task<ActionResult<List<ChatMessageEntity>>> GetChatMessages(int chatId)
     {
