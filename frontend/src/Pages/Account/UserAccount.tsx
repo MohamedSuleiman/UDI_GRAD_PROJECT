@@ -102,9 +102,7 @@ export function UserAccount() {
       </div>
     );
   }
-
-
-
+  
   return (
     <div className="chat">
       <h2>Account</h2>

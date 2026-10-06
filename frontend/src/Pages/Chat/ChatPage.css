@@ -116,3 +116,7 @@
   background-color: gray;
   color: white;
 }
+
+#newChatButton {
+  font-size: 12px;
+}
