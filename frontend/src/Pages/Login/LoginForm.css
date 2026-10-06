@@ -61,3 +61,7 @@
   border: 1px solid #2563eb;
   outline: none;
 }
+
+.form .loginButton {
+  width: 140px;
+}

@@ -10,9 +10,7 @@ interface LoginFormProps {
   onLoginSubmit: (values: LoginFormValues) => Promise<void>;
 }
 
-export default function LoginForm({
-  onLoginSubmit,
-}: LoginFormProps) {
+export default function LoginForm({ onLoginSubmit }: LoginFormProps) {
   const initialValues: LoginFormValues = {
     email: "",
     password: "",
@@ -53,7 +51,7 @@ export default function LoginForm({
             </div>
 
             <button
-              className="mainButton"
+              className="mainButton loginButton"
               type="submit"
               disabled={isSubmitting}
             >

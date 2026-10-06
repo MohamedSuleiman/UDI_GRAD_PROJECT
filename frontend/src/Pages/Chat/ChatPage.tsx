@@ -5,10 +5,7 @@ import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Context/authContext/AuthContext";
-import {
-  CreateChat,
-  PostPromt,
-} from "../../api/ChatApi/GetChatPrompt";
+import { CreateChat, PostPromt } from "../../api/ChatApi/GetChatPrompt";
 
 const apiUrl = (
   import.meta.env.VITE_API_URL || "http://localhost:5065"
@@ -29,17 +26,10 @@ function getErrorMessage(error: unknown): string {
       return data;
     }
 
-    return (
-      data?.detail ||
-      data?.message ||
-      data?.title ||
-      error.message
-    );
+    return data?.detail || data?.message || data?.title || error.message;
   }
 
-  return error instanceof Error
-    ? error.message
-    : "Failed to send message";
+  return error instanceof Error ? error.message : "Failed to send message";
 }
 
 export function ChatPage() {
@@ -54,9 +44,7 @@ export function ChatPage() {
   const sendingRef = useRef(false);
   const nextMessageKey = useRef(0);
 
-  async function handleSend(
-    event: FormEvent<HTMLFormElement>
-  ): Promise<void> {
+  async function handleSend(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
 
     const content = prompt.trim();
@@ -93,15 +81,10 @@ export function ChatPage() {
 
       // Create a chat for the first message.
       if (currentChatId === null) {
-        const chat = await CreateChat(
-          userId,
-          content.slice(0, 50)
-        );
+        const chat = await CreateChat(userId, content.slice(0, 50));
 
         if (!Number.isInteger(chat.id) || chat.id <= 0) {
-          throw new Error(
-            "The backend returned an invalid chat ID."
-          );
+          throw new Error("The backend returned an invalid chat ID.");
         }
 
         currentChatId = chat.id;
@@ -121,22 +104,22 @@ export function ChatPage() {
         previous.map((message) =>
           message.key === messageKey
             ? {
-              ...message,
-              response: result.response,
-            }
-            : message
-        )
+                ...message,
+                response: result.response,
+              }
+            : message,
+        ),
       );
     } catch (error) {
       setMessages((previous) =>
         previous.map((message) =>
           message.key === messageKey
             ? {
-              ...message,
-              error: getErrorMessage(error),
-            }
-            : message
-        )
+                ...message,
+                error: getErrorMessage(error),
+              }
+            : message,
+        ),
       );
     } finally {
       sendingRef.current = false;
@@ -150,11 +133,7 @@ export function ChatPage() {
     setPrompt("");
   }
 
-  if (
-    !userId ||
-    !Number.isInteger(userId) ||
-    userId <= 0
-  ) {
+  if (!userId || !Number.isInteger(userId) || userId <= 0) {
     return (
       <div className="chat">
         <p>Please log in before starting a chat.</p>
@@ -167,34 +146,30 @@ export function ChatPage() {
     <div className="chat">
       <h2>Chat</h2>
 
-      <button
-        type="button"
-        onClick={handleNewChat}
-        disabled={isSending}
-      >
+      <button type="button" onClick={handleNewChat} disabled={isSending}>
         New chat
       </button>
 
-      <div aria-live="polite">
+      <div className="chats" aria-live="polite">
         {messages.map((message) => (
-          <div key={message.key}>
-            <p>
+          <div className="chat-turn" key={message.key}>
+            <p className="user-message">
               <strong>You:</strong> {message.content}
             </p>
 
             {message.error ? (
               <p role="alert">{message.error}</p>
             ) : message.response !== null ? (
-              <p style={{ whiteSpace: "pre-wrap" }}>
+              <p className="ai-answer">
                 <strong>AI:</strong> {message.response}
               </p>
             ) : (
-              <p>Waiting for response...</p>
+              <p className="ai-answer">Waiting for response...</p>
             )}
           </div>
         ))}
       </div>
-      
+
       <form onSubmit={handleSend}>
         <label htmlFor="Content">Your message</label>
 
