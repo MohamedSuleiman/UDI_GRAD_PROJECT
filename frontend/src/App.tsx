@@ -18,14 +18,9 @@ function App() {
 
         <Route path="/Login" element={<LoginPage />} />
 
-        <Route
-          path="/CreateUser"
-          element={<CreateUserPage />}
-        />
-        <Route
-          path="/Account"
-          element={<UserAccount />} />
-        
+        <Route path="/CreateUser" element={<CreateUserPage />} />
+
+        <Route path="/Account" element={<UserAccount />} />
       </Routes>
     </BrowserRouter>
   );

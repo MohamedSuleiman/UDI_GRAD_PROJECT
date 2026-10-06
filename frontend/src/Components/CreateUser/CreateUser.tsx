@@ -11,7 +11,11 @@ export interface CreateUserForm {
   userUsage: string;
 }
 
-/* Props received by the form */
+/* 
+Props received by the form
+Gets values from input data in the form
+Returns a promise (pending, resolved, rejected) when the user is created 
+*/
 interface CreateUserFormProps {
   onCreated: (values: CreateUserForm) => Promise<void>;
 }

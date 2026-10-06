@@ -1,11 +1,9 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace LlmService.Domain.Model;
 
 public class ChatMessageEntity
 {
     public int Id { get; set; }
-    [Column("ChatID")]
     public int ChatId { get; set; }
     public Chat Chat { get; set; } = null!;
 
