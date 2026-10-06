@@ -1,7 +1,7 @@
 import { Field, Formik, Form } from "formik";
 import "../../Pages/Login/LoginForm.css";
 
-/* Data required for creating a new user */
+
 export interface CreateUserForm {
   firstname: string;
   lastname: string;
@@ -11,11 +11,7 @@ export interface CreateUserForm {
   userUsage: string;
 }
 
-/* 
-Props received by the form
-Gets values from input data in the form
-Returns a promise (pending, resolved, rejected) when the user is created 
-*/
+
 interface CreateUserFormProps {
   onCreated: (values: CreateUserForm) => Promise<void>;
 }

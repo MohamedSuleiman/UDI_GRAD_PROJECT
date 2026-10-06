@@ -16,8 +16,6 @@ export function UserAccount() {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  // const [nationality, setNationality] = useState("");
-  // const [userUsage, setUserUsage] = useState("");
 
   async function handleSave() {
     if (!user) return;
@@ -57,8 +55,6 @@ export function UserAccount() {
           setUser(result);
           setFirstName(result.firstName);
           setLastName(result.lastName);
-          // setNationality(result.nationality ?? "");
-          // setUserUsage(result.userUsage ?? "" );
         }
       } catch {
         if (active) {
@@ -78,8 +74,7 @@ export function UserAccount() {
   if (!loggedInUser) {
     return (
       <div className="chat">
-        <h2>Account</h2>
-        <p>Please log in to view your account.</p>
+        <p>Not available when logged out.</p>
         <Link to="/Login">Go to login</Link>
       </div>
     );
@@ -88,19 +83,16 @@ export function UserAccount() {
   if (error) {
     return (
       <div className="chat">
-        <h2>Account</h2>
-        <p role="alert">{error}</p>
+        <p>{error}</p>
+        <p>Please try again later.</p>
       </div>
     );
   }
 
   if (!user || user.id !== userId) {
-    return (
-      <div className="chat">
-        <h2>Account</h2>
-        <p>Loading account...</p>
-      </div>
-    );
+    return <div>
+      <p>Loading account...</p>
+    </div>;
   }
 
 
