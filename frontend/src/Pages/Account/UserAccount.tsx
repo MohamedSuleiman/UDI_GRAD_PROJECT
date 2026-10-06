@@ -5,7 +5,7 @@ import { useAuth } from "../../Context/authContext/AuthContext";
 import { GetUserById } from "../../api/UserApi/UserApi";
 import type { User } from "../../Types/User";
 import { ChangeUserInformation } from "../../api/UserApi/UserApi";
-
+import "./UserAccount.css";
 
 export function UserAccount() {
   const { user: loggedInUser } = useAuth();
@@ -36,7 +36,6 @@ export function UserAccount() {
     }
   }
 
-
   useEffect(() => {
     let active = true;
 
@@ -46,8 +45,6 @@ export function UserAccount() {
     if (userId === undefined) {
       return;
     }
-
-
 
     async function loadUser(id: number): Promise<void> {
       try {
@@ -68,7 +65,6 @@ export function UserAccount() {
     }
 
     void loadUser(userId);
-
 
     return () => {
       active = false;
@@ -102,26 +98,31 @@ export function UserAccount() {
       </div>
     );
   }
-  
-  return (
-    <div className="chat">
-      <h2>Account</h2>
 
+  return (
+    <div className="chat-user">
+      <h1>Account</h1>
       <div>
-        <h3>User Information:</h3>
-        <p>
-          Name: {user.firstName} {user.lastName}
-        </p>
-        <p>Email: {user.email}</p>
-        <p>
-          Nationality: {user.nationality ?? "Unknown"}
-        </p>
-        <p>Usage: {user.userUsage ?? "Unknown"}</p>
+        <h2>User Information:</h2>
+        <div className="userInfo">
+          <p>
+            <strong>Name:</strong> {user.firstName} {user.lastName}
+          </p>
+          <p>
+            <strong>Email:</strong> {user.email}
+          </p>
+          <p>
+            <strong>Nationality:</strong> {user.nationality ?? "Unknown"}
+          </p>
+          <p>
+            <strong>Usage:</strong> {user.userUsage ?? "Unknown"}
+          </p>
+        </div>
       </div>
-      --------------------------------------------------------
-      <div className="account-form">
+      -----------------------------------------------------------------
+      <div className="formFill" id="userInfoForm">
         <label>
-          First name:
+          <strong>First name:</strong>
           <input
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -129,17 +130,22 @@ export function UserAccount() {
         </label>
 
         <label>
-          Last name:
+          <strong>Last name:</strong>
           <input
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
         </label>
-        <button type="button" onClick={handleSave}>
+        <button
+          className="mainButton"
+          id="saveChangesButton"
+          type="button"
+          onClick={handleSave}
+        >
           Save changes
         </button>
       </div>
-      ---------------------------------------------------------
+      -----------------------------------------------------------------
     </div>
   );
 }

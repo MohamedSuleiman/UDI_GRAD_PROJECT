@@ -48,6 +48,7 @@ export function ViewChatMessages({
 
     return (
         <nav className="chat-history" aria-label="Previous chats">
+            
             <h2>Recent chats</h2>
             {isLoading && <p className="chat-history-status">Loading chats...</p>}
             {error && <p className="chat-history-error" role="alert">{error}</p>}

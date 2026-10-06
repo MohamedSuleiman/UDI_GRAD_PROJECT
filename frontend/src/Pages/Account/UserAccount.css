@@ -1,0 +1,39 @@
+.chat-user {
+  background-color: rgba(235, 239, 239, 0.734);
+  padding: 20px;
+  border-radius: 12px;
+  width: fit-content;
+  max-width: 600px;
+  margin: 4px auto;
+}
+
+#saveChangesButton {
+  font-size: 15px;
+  align-self: center;
+  margin-bottom: 12px;
+  width: auto;
+}
+
+#userInfoForm {
+  gap: 12px;
+  width: 50%;
+  min-width: 300px;
+  margin: 0 auto;
+}
+
+.userInfo {
+  width: 320px;
+  margin: 20px auto;
+}
+.userInfo p {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.userInfo strong {
+  width: 110px;
+  padding-right: 20px;
+  text-align: right;
+  font-weight: bold;
+}

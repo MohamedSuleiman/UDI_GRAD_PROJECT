@@ -58,12 +58,16 @@ export function ChatPage() {
     setIsLoadingChat(true);
 
     try {
-      const savedMessages = await getChatMessagesForUser({ chatId: selectedChatId });
-      setMessages(savedMessages.map((message) => ({
-        key: message.id,
-        content: message.content,
-        response: message.response || null,
-      })));
+      const savedMessages = await getChatMessagesForUser({
+        chatId: selectedChatId,
+      });
+      setMessages(
+        savedMessages.map((message) => ({
+          key: message.id,
+          content: message.content,
+          response: message.response || null,
+        })),
+      );
     } catch (error) {
       setChatLoadError(getErrorMessage(error));
     } finally {
@@ -173,71 +177,72 @@ export function ChatPage() {
 
   return (
     <div className="chat-workspace">
-      <ViewChatMessages
-        userId={userId}
-        selectedChatId={chatId}
-        refreshKey={historyRefreshKey}
-        onSelectChat={handleSelectChat}
-      />
-      <main className="chat">
-      <h2>Chat</h2>
-
-      <button
-        className="mainButton"
-        id="newChatButton"
-        type="button"
-        onClick={handleNewChat}
-        disabled={isSending}
-      >
-        New chat
-      </button>
-
-      {isLoadingChat ? (
-        <p className="chat-history-status">Loading conversation...</p>
-      ) : (
-      <div className="chats" aria-live="polite">
-        {messages.map((message) => (
-          <div className="chat-turn" key={message.key}>
-            <p className="user-message">
-              <strong>You:</strong> {message.content}
-            </p>
-
-            {message.error ? (
-              <p role="alert">{message.error}</p>
-            ) : message.response !== null ? (
-              <p className="ai-answer">
-                <strong>AI:</strong> {message.response}
-              </p>
-            ) : (
-              <p className="ai-answer">Waiting for response...</p>
-            )}
-          </div>
-        ))}
-      </div>
-      )}
-      {chatLoadError && <p role="alert">{chatLoadError}</p>}
-
-      <form onSubmit={handleSend}>
-        <label htmlFor="Content">Your message</label>
-
-        <textarea
-          id="Content"
-          name="Content"
-          value={prompt}
-          onChange={(event) => setPrompt(event.target.value)}
-          placeholder="Write your question..."
-          disabled={isSending}
-          required
-        />
-
+      <div className="chat-history-header">
         <button
           className="mainButton"
-          type="submit"
-          disabled={isSending || !prompt.trim()}
+          id="newChatButton"
+          type="button"
+          onClick={handleNewChat}
+          disabled={isSending}
         >
-          {isSending ? "Sending..." : "Send"}
+          New chat
         </button>
-      </form>
+        <ViewChatMessages
+          userId={userId}
+          selectedChatId={chatId}
+          refreshKey={historyRefreshKey}
+          onSelectChat={handleSelectChat}
+        />
+      </div>
+      <main className="chat">
+        <h1>Chat</h1>
+
+        {isLoadingChat ? (
+          <p className="chat-history-status">Loading conversation...</p>
+        ) : (
+          <div className="chats" aria-live="polite">
+            {messages.map((message) => (
+              <div className="chat-turn" key={message.key}>
+                <p className="user-message">
+                  <strong>You:</strong> {message.content}
+                </p>
+
+                {message.error ? (
+                  <p role="alert">{message.error}</p>
+                ) : message.response !== null ? (
+                  <p className="ai-answer">
+                    <strong>AI:</strong> {message.response}
+                  </p>
+                ) : (
+                  <p className="ai-answer">Waiting for response...</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+        {chatLoadError && <p role="alert">{chatLoadError}</p>}
+
+        <form className="chat-form" onSubmit={handleSend}>
+          <label htmlFor="Content">Your message</label>
+
+          <textarea
+            id="Content"
+            name="Content"
+            value={prompt}
+            onChange={(event) => setPrompt(event.target.value)}
+            placeholder="Write your question..."
+            disabled={isSending}
+            required
+          />
+
+          <button
+            className="mainButton"
+            type="submit"
+            disabled={isSending || !prompt.trim()}
+          >
+            {isSending ? "Sending..." : "Send"}
+          </button>
+        </form>
       </main>
     </div>
   );
