@@ -7,20 +7,30 @@ interface Props {
     chatId: number
 }
 
+export type ChatSummary = {
+    id: number;
+    name: string;
+    createdAt: string;
+};
+
 export type chatMessages = {
     id: number,
+    chatId: number,
     content: string,
-    response: string
+    response: string,
+    role: string,
+    createdAt: string
+}
+
+export async function getChatsForUser(userId: number): Promise<ChatSummary[]> {
+    const response = await axios.get<ChatSummary[]>(`${apiUrl}/Chat/user/${userId}`);
+    return response.data;
 }
 
 export async function getChatMessagesForUser({chatId }: Props): Promise<chatMessages[]> {
     try {
-        const listOfMessages = await axios.get(`${apiUrl}/Chat/${chatId}/messages`)
-        //if (listOfMessages.status)
-        console.log(listOfMessages.data)
-        console.log(listOfMessages.status)
-
-        return listOfMessages.data
+        const response = await axios.get<chatMessages[]>(`${apiUrl}/Chat/${chatId}/messages`)
+        return response.data ?? []
     } catch(error: unknown) {
         throw error
     }

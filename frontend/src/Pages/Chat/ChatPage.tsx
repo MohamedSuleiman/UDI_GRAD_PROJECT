@@ -4,9 +4,10 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Link } from "react-router-dom";
-import {ViewChatMessages} from "../../Components/ViewChatMessages"
+import { ViewChatMessages } from "../../Components/ViewChatMessages";
 import { useAuth } from "../../Context/authContext/AuthContext";
 import { CreateChat, PostPromt } from "../../api/ChatApi/GetChatPrompt";
+import { getChatMessagesForUser } from "../../api/ChatApi/GetChats";
 
 const apiUrl = (
   import.meta.env.VITE_API_URL || "http://localhost:5065"
@@ -41,9 +42,34 @@ export function ChatPage() {
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState<DisplayMessage[]>([]);
   const [isSending, setIsSending] = useState(false);
+  const [isLoadingChat, setIsLoadingChat] = useState(false);
+  const [historyRefreshKey, setHistoryRefreshKey] = useState(0);
+  const [chatLoadError, setChatLoadError] = useState("");
 
   const sendingRef = useRef(false);
   const nextMessageKey = useRef(0);
+
+  async function handleSelectChat(selectedChatId: number): Promise<void> {
+    if (selectedChatId === chatId) return;
+
+    setChatId(selectedChatId);
+    setMessages([]);
+    setChatLoadError("");
+    setIsLoadingChat(true);
+
+    try {
+      const savedMessages = await getChatMessagesForUser({ chatId: selectedChatId });
+      setMessages(savedMessages.map((message) => ({
+        key: message.id,
+        content: message.content,
+        response: message.response || null,
+      })));
+    } catch (error) {
+      setChatLoadError(getErrorMessage(error));
+    } finally {
+      setIsLoadingChat(false);
+    }
+  }
 
   async function handleSend(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
@@ -90,6 +116,7 @@ export function ChatPage() {
 
         currentChatId = chat.id;
         setChatId(chat.id);
+        setHistoryRefreshKey((key) => key + 1);
       }
 
       // Send subsequent messages to the same chat.
@@ -132,6 +159,7 @@ export function ChatPage() {
     setChatId(null);
     setMessages([]);
     setPrompt("");
+    setChatLoadError("");
   }
 
   if (!userId || !Number.isInteger(userId) || userId <= 0) {
@@ -144,16 +172,23 @@ export function ChatPage() {
   }
 
   return (
-    <div className="chat">
-      <div className="showChats">
-        <ViewChatMessages/>
-      </div>
+    <div className="chat-workspace">
+      <ViewChatMessages
+        userId={userId}
+        selectedChatId={chatId}
+        refreshKey={historyRefreshKey}
+        onSelectChat={handleSelectChat}
+      />
+      <main className="chat">
       <h2>Chat</h2>
 
       <button type="button" onClick={handleNewChat} disabled={isSending}>
         New chat
       </button>
 
+      {isLoadingChat ? (
+        <p className="chat-history-status">Loading conversation...</p>
+      ) : (
       <div className="chats" aria-live="polite">
         {messages.map((message) => (
           <div className="chat-turn" key={message.key}>
@@ -173,6 +208,8 @@ export function ChatPage() {
           </div>
         ))}
       </div>
+      )}
+      {chatLoadError && <p role="alert">{chatLoadError}</p>}
 
       <form onSubmit={handleSend}>
         <label htmlFor="Content">Your message</label>
@@ -195,6 +232,7 @@ export function ChatPage() {
           {isSending ? "Sending..." : "Send"}
         </button>
       </form>
+      </main>
     </div>
   );
 }

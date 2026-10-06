@@ -31,6 +31,7 @@ public class ChatRepository : IChatRepository
     {
         return await _db.Chats
             .Where(c => c.UserId == userId)
+            .OrderByDescending(c => c.CreatedAt)
             .ToListAsync();
     }
     
