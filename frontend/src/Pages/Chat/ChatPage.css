@@ -107,10 +107,12 @@
 
 .user-message {
   align-self: flex-end;
-  background-color: lightblue;
+  background-color: darkred;
+  color: white;
 }
 
 .ai-answer {
   align-self: flex-start;
-  background-color: lightgray;
+  background-color: gray;
+  color: white;
 }
