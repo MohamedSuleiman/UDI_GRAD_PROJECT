@@ -1,4 +1,4 @@
-name: Build and publish images
+name: Test, build and publish images
 
 on:
   push:
@@ -9,6 +9,25 @@ permissions:
   contents: read
 
 jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore test dependencies
+        run: dotnet restore
+        working-directory: applicationTests
+
+      - name: Run tests
+        run: dotnet test --configuration Release --no-restore
+        working-directory: applicationTests
+
   changes:
     runs-on: ubuntu-latest
 
@@ -32,6 +51,7 @@ jobs:
               - 'Ollama/**'
 
   frontend:
+    needs: tests
     runs-on: ubuntu-latest
 
     steps:
@@ -56,6 +76,7 @@ jobs:
             VITE_API_URL=${{ vars.VITE_API_URL }}
 
   backend:
+    needs: tests
     runs-on: ubuntu-latest
 
     steps:
@@ -78,7 +99,7 @@ jobs:
           tags: brights2026.azurecr.io/kad/lmk-chat:${{ github.sha }}
 
   ollama:
-    needs: changes
+    needs: [tests, changes]
     if: needs.changes.outputs.ollama == 'true'
     runs-on: ubuntu-latest
 
