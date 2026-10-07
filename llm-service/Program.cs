@@ -41,9 +41,8 @@ builder.Services.AddDbContext<DataAccessContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("postgres")));
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
-        policy.WithOrigins("http://localhost:5173",
-                "https://lmk-chat-frontend.kindglacier-bd9579ed.norwayeast.azurecontainerapps.io")
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod());
 });
@@ -60,7 +59,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
-app.UseCors("AllowFrontend");
+app.UseCors("AllowAll");
 app.UseAuthorization();
 
 app.MapControllers();
