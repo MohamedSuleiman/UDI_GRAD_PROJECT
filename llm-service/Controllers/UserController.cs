@@ -62,7 +62,7 @@ public class UserController : ControllerBase
 
             return StatusCode(
                 500,
-                "A server error occurred while processing the request."
+                "A server error occurred while processing the request!"
             );
         }
     }
