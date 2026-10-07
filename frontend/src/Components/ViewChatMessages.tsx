@@ -47,10 +47,10 @@ export function ViewChatMessages({
     }, [userId, refreshKey]);
 
     return (
-        <nav className="chat-history" aria-label="Previous chats">
+        <nav className="chat-history">
             <h2>Recent chats</h2>
             {isLoading && <p className="chat-history-status">Loading chats...</p>}
-            {error && <p className="chat-history-error" role="alert">{error}</p>}
+            {error && <p className="chat-history-error">{error}</p>}
             {!isLoading && !error && chats.length === 0 && (
                 <p className="chat-history-status">No previous chats</p>
             )}
@@ -60,12 +60,15 @@ export function ViewChatMessages({
                         <button
                             type="button"
                             className={chat.id === selectedChatId ? "selected" : ""}
-                            aria-current={chat.id === selectedChatId ? "page" : undefined}
                             onClick={() => onSelectChat(chat.id)}
                         >
                             <span>{chat.name || "Untitled chat"}</span>
                             <time dateTime={chat.createdAt}>
-                                {new Date(chat.createdAt).toLocaleDateString()}
+                                {new Date(chat.createdAt).toLocaleDateString("nb-NO", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                })}
                             </time>
                         </button>
                     </li>
