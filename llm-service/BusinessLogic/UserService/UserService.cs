@@ -7,11 +7,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Backend.BusinessLogic.UserService;
 
-//UserService is the Logic of what needs to happen
-//before the user reaches the database
-//--
-//All Methods in this class is related to User
-
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
@@ -28,7 +23,7 @@ public class UserService : IUserService
         return await _userRepository.GetUserByIdAsync(id);
     }
 
-    public async Task<User> CreateUserAsync(CreateUserDto dto)
+    public async Task<UserResponseDto> CreateUserAsync(CreateUserDto dto)
     {
         var existingEmail = await _userRepository.GetUserByEmailAsync(dto.Email);
         if (existingEmail != null)
@@ -48,7 +43,15 @@ public class UserService : IUserService
         };
         user.Password = _passwordHasher.HashPassword(user, dto.Password);
         await _userRepository.CreateUserAsync(user);
-        return user;
+
+        var userResponse = new UserResponseDto
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email
+        };
+        return userResponse;
     }
 
     public async Task<User?> UpdateUserInformationAsync(int id, UpdateUserDto dto)

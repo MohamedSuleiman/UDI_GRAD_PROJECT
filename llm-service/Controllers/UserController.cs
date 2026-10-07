@@ -19,6 +19,10 @@ public class UserController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetUserById(int id)
     {
+        if (id <= 0)
+        {
+            return BadRequest("User ID must be greater than zero.");
+        }
         try
         {
             var user = await _userService.GetUserByIdAsync(id);
