@@ -90,6 +90,7 @@
   background: var(--bg);
   box-shadow: var(--shadow);
   text-align: left;
+  background-color:  rgba(229, 233, 233, 0.734);
 }
 
 .chat form label {
@@ -141,35 +142,6 @@
   box-shadow: none;
 }
 
-@media (max-width: 640px) {
-  .chat-workspace {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-    width: calc(100% - 32px);
-    margin: 24px auto;
-  }
-
-  .chat-history {
-    padding: 0 0 16px;
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .chat-history-list {
-    max-height: 180px;
-    overflow-y: auto;
-  }
-
-  .chat form {
-    grid-template-columns: minmax(0, 1fr);
-    padding: 14px;
-  }
-
-  .chat form .mainButton {
-    width: 100%;
-  }
-}
-
 .chat-turn {
   display: flex;
   flex-direction: column;
@@ -197,6 +169,16 @@
   color: white;
 }
 
+.chat-history-header {
+  text-align: left;
+  background-color: rgba(229, 233, 233, 0.734);
+  border-radius: 8px;
+  padding: 10px;
+}
+
 #newChatButton {
   font-size: 12px;
+  align-self: flex-start;
+  margin-bottom: 12px;
+  width: auto;
 }
