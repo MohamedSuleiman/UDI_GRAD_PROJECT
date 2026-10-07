@@ -2,6 +2,7 @@ using Backend.BusinessLogic.ChatMessageEntityService;
 using Backend.DataAccessLayer.repositories;
 using Backend.Domain.DTO;
 using LlmService;
+using LlmService.BusinessLogic;
 using LlmService.Controllers;
 using LlmService.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -28,21 +29,32 @@ public class ChatControllerWithoutDatabaseTests
             .Setup(mock => mock.GetUserPromt(1, "Hello"))
             .ReturnsAsync("Mock response");
 
-        var service = new ChatMessageEntityService(repository.Object, client.Object);
-        var controller = new ChatController(client.Object, service);
+        var chatRepository = new Mock<IChatRepository>();
+        chatRepository
+            .Setup(repo => repo.GetChatByIdAsync(1))
+            .ReturnsAsync(new Chat { Id = 1, Name = "Test chat", UserId = 1 });
+        repository
+            .Setup(repo => repo.saveMessageEntityToDB(It.IsAny<ChatMessageEntity>(), "Mock response"))
+            .Returns(Task.CompletedTask);
+
+        var service = new ChatMessageEntityService(repository.Object, client.Object, chatRepository.Object);
+        var chatService = new ChatService(client.Object, chatRepository.Object);
+        var controller = new ChatController(client.Object, service, chatService);
 
         var result = await controller.sendPrompt(new ChatInputDTO
         {
-            ChatId = 1,
+            ChatID = 1,
             Content = ["Hello"]
         });
 
         var okResult = Assert.IsType<OkObjectResult>(result);
         var response = Assert.IsType<ChatMessageEntityResponseDTO>(okResult.Value);
         Assert.Equal(42, response.Id);
-        Assert.Equal("Mock response", response.response);
+        Assert.Equal("Mock response", response.Response);
         repository.Verify(repo => repo.CreateChat(It.Is<ChatMessageEntity>(message =>
             message.ChatId == 1 && message.Content == "Hello")), Times.Once);
+        repository.Verify(repo => repo.saveMessageEntityToDB(
+            It.IsAny<ChatMessageEntity>(), "Mock response"), Times.Once);
     }
 
     [Fact]
@@ -50,8 +62,10 @@ public class ChatControllerWithoutDatabaseTests
     {
         var repository = new Mock<IChatMessageEnityRepository>();
         var client = new Mock<IClientO>();
-        var service = new ChatMessageEntityService(repository.Object, client.Object);
-        var controller = new ChatController(client.Object, service);
+        var chatRepository = new Mock<IChatRepository>();
+        var service = new ChatMessageEntityService(repository.Object, client.Object, chatRepository.Object);
+        var chatService = new ChatService(client.Object, chatRepository.Object);
+        var controller = new ChatController(client.Object, service, chatService);
 
         var result = await controller.sendPrompt(new ChatInputDTO
         {
@@ -79,12 +93,21 @@ public class ChatControllerWithoutDatabaseTests
             .Setup(mock => mock.GetUserPromt(1, "First line\nSecond line"))
             .ReturnsAsync("Mock response");
 
-        var service = new ChatMessageEntityService(repository.Object, client.Object);
-        var controller = new ChatController(client.Object, service);
+        var chatRepository = new Mock<IChatRepository>();
+        chatRepository
+            .Setup(repo => repo.GetChatByIdAsync(1))
+            .ReturnsAsync(new Chat { Id = 1, Name = "Test chat", UserId = 1 });
+        repository
+            .Setup(repo => repo.saveMessageEntityToDB(It.IsAny<ChatMessageEntity>(), "Mock response"))
+            .Returns(Task.CompletedTask);
+
+        var service = new ChatMessageEntityService(repository.Object, client.Object, chatRepository.Object);
+        var chatService = new ChatService(client.Object, chatRepository.Object);
+        var controller = new ChatController(client.Object, service, chatService);
 
         var result = await controller.sendPrompt(new ChatInputDTO
         {
-            UserID = 1,
+            ChatID = 1,
             Content = ["First line", "Second line"]
         });
 
@@ -103,12 +126,17 @@ public class ChatControllerWithoutDatabaseTests
             .ThrowsAsync(new InvalidOperationException("Database unavailable"));
 
         var client = new Mock<IClientO>();
-        var service = new ChatMessageEntityService(repository.Object, client.Object);
-        var controller = new ChatController(client.Object, service);
+        var chatRepository = new Mock<IChatRepository>();
+        chatRepository
+            .Setup(repo => repo.GetChatByIdAsync(1))
+            .ReturnsAsync(new Chat { Id = 1, Name = "Test chat", UserId = 1 });
+        var service = new ChatMessageEntityService(repository.Object, client.Object, chatRepository.Object);
+        var chatService = new ChatService(client.Object, chatRepository.Object);
+        var controller = new ChatController(client.Object, service, chatService);
 
         var result = await controller.sendPrompt(new ChatInputDTO
         {
-            UserID = 1,
+            ChatID = 1,
             Content = ["Hello"]
         });
 

@@ -62,5 +62,47 @@ public class IntegrationTest
 
         await Assert.ThrowsAsync<ArgumentException>(() => chatService.CreateChat(createChatDto));
     }
+
+    [Fact]
+    public async Task GetChatsByUserId_ValidUserId_ReturnsRepositoryChats()
+    {
+        var mockClient = new Mock<IClientO>();
+        var mockChatRepository = new Mock<IChatRepository>();
+        var expectedChats = new List<Chat>
+        {
+            new() { Id = 4, Name = "Recent chat", UserId = 7 },
+            new() { Id = 2, Name = "Older chat", UserId = 7 }
+        };
+
+        mockChatRepository
+            .Setup(repository => repository.GetChatsByUserIdAsync(7))
+            .ReturnsAsync(expectedChats);
+
+        var chatService = new ChatService(mockClient.Object, mockChatRepository.Object);
+
+        var result = await chatService.GetChatsByUserId(7);
+
+        Assert.Same(expectedChats, result);
+        mockChatRepository.Verify(
+            repository => repository.GetChatsByUserIdAsync(7),
+            Times.Once);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    public async Task GetChatsByUserId_InvalidUserId_ThrowsAndDoesNotQueryRepository(int userId)
+    {
+        var mockClient = new Mock<IClientO>();
+        var mockChatRepository = new Mock<IChatRepository>();
+        var chatService = new ChatService(mockClient.Object, mockChatRepository.Object);
+
+        await Assert.ThrowsAsync<ArgumentException>(
+            () => chatService.GetChatsByUserId(userId));
+
+        mockChatRepository.Verify(
+            repository => repository.GetChatsByUserIdAsync(It.IsAny<int>()),
+            Times.Never);
+    }
 }
 
