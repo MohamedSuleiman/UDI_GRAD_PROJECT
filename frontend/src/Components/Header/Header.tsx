@@ -30,13 +30,9 @@ export function DropDownHeader() {
 
       <div className="header-actions">
         {user ? (
-          <button
-            type="button"
-            className="login-link"
-            onClick={handleLogout}
-          >
+          <Link to="/" className="login-link" onClick={handleLogout}>
             ←］ Log out
-          </button>
+          </Link>
         ) : (
           <Link
             to="/Login"
@@ -70,10 +66,7 @@ export function DropDownHeader() {
 
           {menuOpen && (
             <div id="header-menu" className="dropdown-menu">
-              <button
-                type="button"
-                onClick={() => handleNavigation("/Chat")}
-              >
+              <button type="button" onClick={() => handleNavigation("/Chat")}>
                 Chat
               </button>
 

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import CreateUserForm from "../../Components/CreateUser/CreateUser";
 import type { CreateUserForm as FormValues } from "../../Components/CreateUser/CreateUser";
 import { CreateUser } from "../../api/UserApi/UserApi";
 import { useNavigate } from "react-router-dom";
+import CreateUserForm from "../../Components/CreateUser/CreateUser";
 
 export default function CreateUserPage() {
     const [error, setError] = useState("");

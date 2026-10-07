@@ -5,7 +5,7 @@ import { useAuth } from "../../Context/authContext/AuthContext";
 import { GetUserById } from "../../api/UserApi/UserApi";
 import type { User } from "../../Types/User";
 import { ChangeUserInformation } from "../../api/UserApi/UserApi";
-
+import "./UserAccount.css";
 
 export function UserAccount() {
   const { user: loggedInUser } = useAuth();
@@ -16,8 +16,6 @@ export function UserAccount() {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  // const [nationality, setNationality] = useState("");
-  // const [userUsage, setUserUsage] = useState("");
 
   async function handleSave() {
     if (!user) return;
@@ -36,7 +34,6 @@ export function UserAccount() {
     }
   }
 
-
   useEffect(() => {
     let active = true;
 
@@ -47,8 +44,6 @@ export function UserAccount() {
       return;
     }
 
-
-
     async function loadUser(id: number): Promise<void> {
       try {
         const result = await GetUserById(id);
@@ -57,8 +52,6 @@ export function UserAccount() {
           setUser(result);
           setFirstName(result.firstName);
           setLastName(result.lastName);
-          // setNationality(result.nationality ?? "");
-          // setUserUsage(result.userUsage ?? "" );
         }
       } catch {
         if (active) {
@@ -69,7 +62,6 @@ export function UserAccount() {
 
     void loadUser(userId);
 
-
     return () => {
       active = false;
     };
@@ -78,8 +70,7 @@ export function UserAccount() {
   if (!loggedInUser) {
     return (
       <div className="chat">
-        <h2>Account</h2>
-        <p>Please log in to view your account.</p>
+        <p>Not available when logged out.</p>
         <Link to="/Login">Go to login</Link>
       </div>
     );
@@ -88,42 +79,42 @@ export function UserAccount() {
   if (error) {
     return (
       <div className="chat">
-        <h2>Account</h2>
-        <p role="alert">{error}</p>
+        <p>{error}</p>
+        <p>Please try again later.</p>
       </div>
     );
   }
 
   if (!user || user.id !== userId) {
-    return (
-      <div className="chat">
-        <h2>Account</h2>
-        <p>Loading account...</p>
-      </div>
-    );
+    return <div>
+      <p>Loading account...</p>
+    </div>;
   }
 
-
-
   return (
-    <div className="chat">
-      <h2>Account</h2>
-
+    <div className="chat-user">
+      <h1>Account</h1>
       <div>
-        <h3>User Information:</h3>
-        <p>
-          Name: {user.firstName} {user.lastName}
-        </p>
-        <p>Email: {user.email}</p>
-        <p>
-          Nationality: {user.nationality ?? "Unknown"}
-        </p>
-        <p>Usage: {user.userUsage ?? "Unknown"}</p>
+        <h2>User Information:</h2>
+        <div className="userInfo">
+          <p>
+            <strong>Name:</strong> {user.firstName} {user.lastName}
+          </p>
+          <p>
+            <strong>Email:</strong> {user.email}
+          </p>
+          <p>
+            <strong>Nationality:</strong> {user.nationality ?? "Unknown"}
+          </p>
+          <p>
+            <strong>Usage:</strong> {user.userUsage ?? "Unknown"}
+          </p>
+        </div>
       </div>
-      --------------------------------------------------------
-      <div className="account-form">
+      -----------------------------------------------------------------
+      <div className="formFill" id="userInfoForm">
         <label>
-          First name:
+          <strong>First name:</strong>
           <input
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -131,17 +122,22 @@ export function UserAccount() {
         </label>
 
         <label>
-          Last name:
+          <strong>Last name:</strong>
           <input
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
         </label>
-        <button type="button" onClick={handleSave}>
+        <button
+          className="mainButton"
+          id="saveChangesButton"
+          type="button"
+          onClick={handleSave}
+        >
           Save changes
         </button>
       </div>
-      ---------------------------------------------------------
+      -----------------------------------------------------------------
     </div>
   );
 }
