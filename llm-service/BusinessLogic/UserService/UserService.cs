@@ -70,42 +70,12 @@ public class UserService : IUserService
         {
             user.LastName = dto.LastName;
         }
-        if (dto.Email != null)
-        {
-            user.Email = dto.Email;
-        }
-        if (dto.Password != null)
-        {
-            user.Password = dto.Password;
-        }
-        if (dto.Nationality != null)
-        {
-            user.Nationality = dto.Nationality.Value;
-        }
-        if (dto.UserUsage != null)
-        {
-            user.UserUsage = dto.UserUsage.Value;
-        }
 
         await _userRepository.UpdateUserAsync(user);
         return user;
     }
 
 
-    public async Task<User?> DeleteUserAsync(int id)
-    {
-        User? user = await _userRepository.GetUserByIdAsync(id);
-
-        if (user == null)
-        {
-            return null;
-        }
-
-        await _userRepository.DeleteUserAsync(user);
-
-        return user;
-
-    }
 
     public async Task<User?> LoginUserAsync(string email, string password)
     {
@@ -124,6 +94,21 @@ public class UserService : IUserService
         }
 
         return user;
+    }
+
+    public async Task<User?> DeleteUserAsync(int id)
+    {
+        User? user = await _userRepository.GetUserByIdAsync(id);
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        await _userRepository.DeleteUserAsync(user);
+
+        return user;
+
     }
 
 }
