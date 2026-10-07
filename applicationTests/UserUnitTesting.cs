@@ -9,6 +9,7 @@ namespace applicationTests;
 
 public class UserUnitTesting
 {
+    // Test for creating a user
     [Fact]
     public async Task CreateUser_ValidInput()
     {
@@ -97,7 +98,29 @@ public class UserUnitTesting
 
         //Act & Assert
         await Assert.ThrowsAsync<InvalidOperationException>(async () => await service.CreateUserAsync(dto));
+    }
 
+
+    [Fact]
+    public async Task CreateUser_EmptyFirstName_throwsExeption()
+
+    {
+        //Arrange 
+
+        var repository = new Mock<IUserRepository>();
+        var hasher = new Mock<IPasswordHasher<User>>();
+
+        var dto = new CreateUserDto
+        {
+            FirstName = "",
+            LastName = "traa",
+            Email = ""
+        };
+
+        var service = new UserService(repository.Object, hasher.Object);
+
+        //Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(async () => await service.CreateUserAsync(dto));
 
     }
 
