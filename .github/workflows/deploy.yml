@@ -87,10 +87,13 @@ jobs:
       - name: Deploy to Azure Container
         if: github.event_name == 'push'
         uses: azure/container-apps-deploy-action@v2
-        env:
-          RESOURCE_GROUP: rg-kadir-01
-          CONTAINER_APP: lmk-chat-frontend
-          IMAGE: brights2026.azurecr.io/kad/lmk-chat-frontend:${{ github.sha }}
+        with:
+          containerAppEnvironment: managedEnvironment-rgkadir01-8e92
+          resourceGroup: rg-kadir-01
+          containerAppName: lmk-chat-frontend
+          imageToDeploy: brights2026.azurecr.io/kad/lmk-chat-frontend:${{ github.sha }}
+
+
         
         
 
@@ -153,7 +156,7 @@ jobs:
       - name: Deploy to Azure Container
         if: github.event_name == 'push'
         uses: azure/container-apps-deploy-action@v2
-        env:
-          RESOURCE_GROUP: rg-kadir-01
-          CONTAINER_APP: lmk-chat-frontend
-          IMAGE: brights2026.azurecr.io/kad/lmk-chat-frontend:${{ github.sha }}
+        with:
+          resourceGroup: rg-kadir-01
+          containerAppName: lmk-chat-frontend
+          imageToDeploy: brights2026.azurecr.io/kad/lmk-chat-frontend:${{ github.sha }}
