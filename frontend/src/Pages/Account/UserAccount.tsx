@@ -95,7 +95,6 @@ export function UserAccount() {
     <div className="chat-user">
       <h1>Account</h1>
       <div>
-        <h2>User Information:</h2>
         <div className="userInfo">
           <p>
             <strong>Name:</strong> {user.firstName} {user.lastName}
