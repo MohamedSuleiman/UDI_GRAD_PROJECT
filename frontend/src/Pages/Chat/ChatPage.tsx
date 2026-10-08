@@ -228,7 +228,7 @@ export function ChatPage() {
             name="Content"
             value={prompt}
             onChange={(event) => setPrompt(event.target.value)}
-            placeholder="Write your question..."
+            placeholder="Write to Laxmi ..."
             disabled={isSending}
             required
           />

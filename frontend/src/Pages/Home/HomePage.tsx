@@ -33,8 +33,8 @@ export function HomePage() {
 
         <a href="/Chat" className="home-card chat-style-card">
           <img id="chat-icon" src={logo2} alt="Logo" />
-          <nav className="card-title">Want to Chat</nav>
-          <p>You want to chat with our chatbot!</p>
+          <nav className="card-title">Chat with Laxmi!</nav>
+          <p>You want to chat with Laxmi!</p>
         </a>
 
         <a href="/CreateUser" className="home-card chat-style-card">
