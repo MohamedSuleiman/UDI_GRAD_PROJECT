@@ -6,7 +6,7 @@
   justify-content: flex-start;
   align-items: center;
 
-  background-color:  rgba(229, 233, 233, 0.734);
+  background-color: rgba(229, 233, 233, 0.734);
   font-family: Arial, Helvetica, sans-serif;
 
   padding: 20px;
@@ -63,5 +63,9 @@
 }
 
 .form .loginButton {
+  width: 140px;
+}
+
+#createButton {
   width: 140px;
 }
