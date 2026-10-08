@@ -195,7 +195,6 @@ export function ChatPage() {
         />
       </div>
       <main className="chat">
-
         {isLoadingChat ? (
           <p className="chat-history-status">Loading conversation...</p>
         ) : (
